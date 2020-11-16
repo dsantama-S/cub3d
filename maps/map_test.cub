@@ -1,0 +1,15 @@
+R 1920 1080
+NO textures/eagle.xpm
+SO textures/purplestone.xpm
+WE textures/eagle.xpm
+EA textures/bluestone.xpm
+
+S textures/barril.xpm
+F 220,100,0
+C 225,30,0
+
+111111
+100101
+102001
+1100N1
+111111
