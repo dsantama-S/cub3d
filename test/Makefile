@@ -1,4 +1,4 @@
-SRCS			= test1.c
+SRCS			= test2.c
 OBJS			= $(SRCS:.c=.o)
 
 CC				= gcc

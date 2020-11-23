@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/12 09:09:37 by dsantama          #+#    #+#             */
-/*   Updated: 2020/11/16 11:18:04 by dsantama         ###   ########.fr       */
+/*   Updated: 2020/11/23 09:52:34 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,7 @@ int     main(void)
     void    *mlx;
     void    *mlx_win;
     t_data  img;
-    int     n;
     
-    n = 0;
     mlx = mlx_init();
     mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
     img.img = mlx_new_image(mlx, 1920, 1080);
