@@ -1,4 +1,5 @@
-SRCS			= test3.c
+LIB				= cub3d.h
+SRCS			= get_next_line.c cub3d.c main.c
 OBJS			= $(SRCS:.c=.o)
 
 CC				= gcc
@@ -7,23 +8,32 @@ CFLAGS			= -O3 -Wall -Wextra -Werror -I.
 LIBS			= -Lmlx -lmlx -framework OpenGL -framework AppKit -lm -lz
 MLX				= libmlx.dylib
 
-NAME			= tests
+NAME			= cub3d.a
 
 all:			$(NAME)
 
-$(NAME):		$(MLX) $(OBJS)
-				gcc ${CFLAGS} -o ${NAME} ${OBJS} ${LIBS}
+$(NAME):		$(MLX) $(OBJS) _libft
+				@ar -rcs $(NAME) $(OBJS) $(shell find libft/ -name "*.o")
+				@ranlib $(NAME)
 
 $(MLX):
 				@$(MAKE) -C mlx
 				@mv mlx/$(MLX) .
 
+.c.o:
+				gcc ${CFLAGS} -c $< -o $(<:.c=.o)
+
+_libft:
+				@make -C libft
+
 clean:
 				@$(MAKE) -C mlx clean
 				$(RM) $(OBJS) $(BONUS_OBJS)
+				@make clean -C libft
 
 fclean:			clean
 				$(RM) $(NAME) $(MLX)
+				@make fclean -C libft
 
 re:				fclean $(NAME)
 

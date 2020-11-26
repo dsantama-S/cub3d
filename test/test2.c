@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 09:01:52 by dsantama          #+#    #+#             */
-/*   Updated: 2020/11/23 11:41:12 by dsantama         ###   ########.fr       */
+/*   Updated: 2020/11/24 09:40:02 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,7 +186,7 @@ int             main(void)
     t_vars      vars;
     
     vars.mlx = mlx_init();
-    vars.win = mlx_new_window(vars.mlx, 1920, 1080, "Hello world!");
+    vars.win = mlx_new_window(vars.mlx, 1920, 1080, "Banderas");
     mlx_key_hook(vars.win, key_hook, &vars);
     mlx_hook(vars.win, 2, 1L<<0, close, &vars);
     mlx_loop(vars.mlx);
