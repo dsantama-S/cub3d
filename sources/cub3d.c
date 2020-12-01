@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 10:16:29 by dsantama          #+#    #+#             */
-/*   Updated: 2020/12/01 11:43:23 by dsantama         ###   ########.fr       */
+/*   Updated: 2020/12/01 14:01:03 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,28 +25,38 @@ static int		define_map(int fd, char *str, t_data *data)
 		n++;
 	}
 	data->map = str;
-	printf("%s", data->map);
 	return (0);
 }
 
 static int		define_path(int fd, char *str, t_data *data)
 {
-	data->r = str;
-	get_next_line(fd, &str);
-	data->no = str;
-	get_next_line(fd, &str);
-	data->so = str;
-	get_next_line(fd, &str);
-	data->we = str;
-	get_next_line(fd, &str);
-	data->ea = str;
-	get_next_line(fd, &str);
-	get_next_line(fd, &str);
-	data->s = str;
-	get_next_line(fd, &str);
-	data->f = str;
-	get_next_line(fd, &str);
-	data->c = str;
+	int n;
+	int	lines_read;
+
+	n = 0;
+	lines_read = 1;
+	while (n < 14(hay q sacar cuantas lineas))
+	{
+		if (ft_strncmp(str, "R", 1) == 0)
+			data->r = str;
+		if (ft_strncmp(str, "NO", 2) == 0)
+			data->no = str;
+		if (ft_strncmp(str, "SO", 2) == 0)
+			data->so = str;
+		if (ft_strncmp(str, "WE", 2) == 0)
+			data->we = str;
+		if (ft_strncmp(str, "EA", 2) == 0)
+			data->ea = str;
+		if (ft_strncmp(str, "S ", 2) == 0)
+			data->s = str;
+		if (ft_strncmp(str, "F", 1) == 0)
+			data->f = str;
+		if (ft_strncmp(str, "C", 1) == 0)
+			data->c = str;
+		get_next_line(fd, &str);
+		n++;
+	}
+	printf("%s\n", data->f);
 	define_map(fd, str, data);
 	return (0);
 }
@@ -54,11 +64,12 @@ static int		define_path(int fd, char *str, t_data *data)
 int				read_map_cub(char *path)
 {
 	char	c;
-	int		n;
 	int		fd;
+	int		n;
 	char	*str;
 	t_data	*data;
 
+	n = 0;
 	data = ((t_data *)malloc(sizeof(t_data)));
 	if (!data)
 		return (0);
@@ -66,7 +77,6 @@ int				read_map_cub(char *path)
 	if (!str)
 		return (0);
 	fd = open(path, O_RDONLY);
-	n = 0;
 	if (fd != -1)
 	{
 		while (read(fd, &c, sizeof(c) != 0) && c != '\n')
