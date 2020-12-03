@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 10:16:29 by dsantama          #+#    #+#             */
-/*   Updated: 2020/12/01 14:01:03 by dsantama         ###   ########.fr       */
+/*   Updated: 2020/12/03 11:42:48 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,45 +18,56 @@ static int		define_map(int fd, char *str, t_data *data)
 	int		n;
 
 	n = 0;
-	get_next_line(fd, &str);
 	while (read(fd, &c, sizeof(c) != 0))
 	{
 		str[n] = c;
 		n++;
 	}
 	data->map = str;
+	printf("%s\n", data->map);
 	return (0);
 }
 
-static int		define_path(int fd, char *str, t_data *data)
+static int		define_path(int fd, char *str, t_data *data, int lines)
 {
-	int n;
-	int	lines_read;
+	char	c;
+	int		count;
+	int		n;
+	int		condition;
 
 	n = 0;
-	lines_read = 1;
-	while (n < 14(hay q sacar cuantas lineas))
+	count = 1;
+	condition = 1;
+	while (read(fd, &c, sizeof(c) != 0) && c != '\n')
+	{
+		str[n] = c;
+		n++;
+	}
+	while (count < lines)
 	{
 		if (ft_strncmp(str, "R", 1) == 0)
 			data->r = str;
-		if (ft_strncmp(str, "NO", 2) == 0)
+		else if (ft_strncmp(str, "NO", 2) == 0)
 			data->no = str;
-		if (ft_strncmp(str, "SO", 2) == 0)
+		else if (ft_strncmp(str, "SO", 2) == 0)
 			data->so = str;
-		if (ft_strncmp(str, "WE", 2) == 0)
+		else if (ft_strncmp(str, "WE", 2) == 0)
 			data->we = str;
-		if (ft_strncmp(str, "EA", 2) == 0)
+		else if (ft_strncmp(str, "EA", 2) == 0)
 			data->ea = str;
-		if (ft_strncmp(str, "S ", 2) == 0)
+		else if (ft_strncmp(str, "S ", 2) == 0)
 			data->s = str;
-		if (ft_strncmp(str, "F", 1) == 0)
+		else if (ft_strncmp(str, "F", 1) == 0)
 			data->f = str;
-		if (ft_strncmp(str, "C", 1) == 0)
+		else if (ft_strncmp(str, "C", 1) == 0)
 			data->c = str;
+		else
+			condition = 0;
+		if (condition == 1)
+			lines--;
 		get_next_line(fd, &str);
-		n++;
+		count++;
 	}
-	printf("%s\n", data->f);
 	define_map(fd, str, data);
 	return (0);
 }
@@ -65,11 +76,11 @@ int				read_map_cub(char *path)
 {
 	char	c;
 	int		fd;
-	int		n;
+	int		lines;
 	char	*str;
 	t_data	*data;
 
-	n = 0;
+	lines = 0;
 	data = ((t_data *)malloc(sizeof(t_data)));
 	if (!data)
 		return (0);
@@ -79,12 +90,14 @@ int				read_map_cub(char *path)
 	fd = open(path, O_RDONLY);
 	if (fd != -1)
 	{
-		while (read(fd, &c, sizeof(c) != 0) && c != '\n')
+		while (read(fd, &c, sizeof(c) != 0))
 		{
-			str[n] = c;
-			n++;
+			if (c == '\n')
+				lines++;
 		}
-		define_path(fd, str, data);
+		close(fd);
+		fd = open(path, O_RDONLY);
+		define_path(fd, str, data, lines);
 	}
 	return (0);
 }
