@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 09:14:24 by dsantama          #+#    #+#             */
-/*   Updated: 2020/12/01 11:41:12 by dsantama         ###   ########.fr       */
+/*   Updated: 2020/12/09 11:48:37 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct		s_data
 	char				*f;
 	char				*c;
 	char				*map;
+	int					elements;
 }					t_data;
 
 int					get_next_line(int fd, char **line);
