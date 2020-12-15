@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 09:14:24 by dsantama          #+#    #+#             */
-/*   Updated: 2020/12/09 11:48:37 by dsantama         ###   ########.fr       */
+/*   Updated: 2020/12/15 13:14:08 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,19 @@ typedef struct		s_data
 	char				*r;
 	char				*no;
 	char				*so;
+	char				*texture_so;
 	char				*we;
 	char				*ea;
 	char				*s;
 	char				*f;
 	char				*c;
 	char				*map;
+	char				*x;
+	char				*y;
 	int					elements;
 }					t_data;
 
 int					get_next_line(int fd, char **line);
+void				analyze_map(t_data *data);
 int					read_map_cub(char *path);
 #endif

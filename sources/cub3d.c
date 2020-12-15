@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 10:16:29 by dsantama          #+#    #+#             */
-/*   Updated: 2020/12/09 11:55:22 by dsantama         ###   ########.fr       */
+/*   Updated: 2020/12/15 10:49:34 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ int				read_map_cub(char *path)
 		return (0);
 	fd = open(path, O_RDONLY);
 	read_map(fd, path, data);
+	analyze_map(data);
 	printf("%s\n", data->map);
 	return (0);
 }

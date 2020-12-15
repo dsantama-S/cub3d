@@ -1,5 +1,5 @@
 LIB				= cub3d.h
-SRCS			= get_next_line.c cub3d.c main.c
+SRCS			= get_next_line.c cub3d.c analyze.c main.c
 OBJS			= $(SRCS:.c=.o)
 
 CC				= gcc
