@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/12 09:09:37 by dsantama          #+#    #+#             */
-/*   Updated: 2020/11/23 09:52:34 by dsantama         ###   ########.fr       */
+/*   Updated: 2020/12/16 08:37:22 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,4 +100,32 @@ int     main(void)
     my_spain(img);
     mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
     mlx_loop(mlx);
+}
+
+static void texture_so(t_data *data)
+{
+	char	str[0];
+	int 	n;
+	int		n2;
+
+	n = 0;
+	n2 = 0;
+	while (data->so[n] != '\0')
+	{
+		if (data->so[n] == 't')
+		{
+			while (data->so[n] != (data->r[n] >= 65 && data->r[n] <= 122))
+			{
+				str[n2] = data->so[n];
+				printf("%c\n", str[n2]);
+				n++;
+				n2++;
+			}
+		}
+		n++;
+	}
+	data->texture_so = str;
+	printf("%s\n", data->texture_so);
+	printf("%s\n", data->x);
+	printf("%s\n", data->y);
 }

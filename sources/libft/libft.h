@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/29 12:48:21 by dsantama          #+#    #+#             */
-/*   Updated: 2020/09/25 10:28:03 by dsantama         ###   ########.fr       */
+/*   Updated: 2020/12/16 10:17:28 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ char				*ft_strdup(const char *src);
 char				*ft_strchr(char *s, int c);
 char				*ft_strnew(size_t size);
 char				*ft_strrchr(const char *s, int c);
+char				*ft_strnchr(const char *s, int c, int n);
 char				*ft_strtrim(char const *s1, char const *set);
 char				*ft_strjoin(char const *s1, char const *s2);
 char				*ft_strncpy(char *dest, char *src, unsigned int n);
