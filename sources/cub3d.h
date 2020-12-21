@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 09:14:24 by dsantama          #+#    #+#             */
-/*   Updated: 2020/12/16 09:55:11 by dsantama         ###   ########.fr       */
+/*   Updated: 2020/12/21 10:44:27 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,6 @@ typedef struct		s_colors
 
 int					get_next_line(int fd, char **line);
 int					analyze_map(t_data *data);
+void				error_colors(t_colors *colors);
 int					read_map_cub(char *path);
 #endif
