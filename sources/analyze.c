@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 11:15:41 by dsantama          #+#    #+#             */
-/*   Updated: 2020/12/21 11:14:21 by dsantama         ###   ########.fr       */
+/*   Updated: 2020/12/22 13:31:33 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,10 @@ static void		resolution(t_data *data)
 	int		n;
 
 	n = 0;
+	aux[4] = 0;
 	str = ft_strnchr(data->r, ' ', 1);
 	str++;
-	while (str[n] != ' ')
+	while (str[n] != ' ' && str[n] != '\0')
 	{
 		aux[n] = str[n];
 		n++;
@@ -58,35 +59,64 @@ static void		colors_f(int n, int n2, t_data *data, t_colors *colors)
 	char	*str;
 	char	*str2;
 	char	*str3;
-	char	*aux;
-	char	*aux2;
+	char	aux[4];
+	char	aux2[4];
 
-	aux = ft_strnew(4);
-	aux2 = ft_strnew(4);
+	ft_bzero(aux, 4);
+	ft_bzero(aux2, 4);
 	str = ft_strnchr(data->f, ',', 2);
 	str++;
 	colors->b_f = str;
 	str2 = ft_strnchr(data->f, ',', 1);
 	str2++;
-	while (str2[n] != ',')
+	while (str2[n] != ',' && str2[n] != '\0')
 		aux[n2++] = str2[n++];
 	n = 0;
 	n2 = 0;
 	colors->g_f = aux;
 	str3 = ft_strnchr(data->f, ' ', 1);
 	str3++;
-	while (str3[n] != ',')
+	while (str3[n] != ',' && str3[n] != '\0')
 		aux2[n2++] = str3[n++];
 	colors->r_f = aux2;
+	printf("%s\n", colors->r_f);
+	printf("%s\n", colors->g_f);
+	printf("%s\n", colors->b_f);
 }
 
 static void		colors_c(int n, int n2, t_data *data, t_colors *colors)
 {
-	printf("%i,%i\n", n, n2);
-	printf("%s\n", data->x);
+	char	*str;
+	char	*str2;
+	char	*str3;
+	char	aux[4];
+	char	aux2[4];
+	
+	ft_bzero(aux, 4);
+	ft_bzero(aux2, 4);
+	str = ft_strnchr(data->c, ',', 2);
+	str++;
+	colors->b_c = str;
+	str2 = ft_strnchr(data->c, ',', 1);
+	str2++;
+	while (str2[n] != ',' && n < 4 && str2[n] != '\0')
+		aux[n2++] = str2[n++];
+	n = 0;
+	n2 = 0;
+	colors->g_c = aux;
+	str3 = ft_strnchr(data->c, ' ', 1);
+	str3++;
+	while (str3[n] != ',' && str3[n] != '\0')
+		aux2[n2++] = str3[n++];
+	colors->r_c = aux2;
 	printf("%s\n", colors->r_f);
+	printf("%s\n", colors->g_f);
 	printf("%s\n", colors->b_f);
+	printf("%s\n", colors->r_c);
+	printf("%s\n", colors->g_c);
+	printf("%s\n", colors->b_c);
 }
+
 int				analyze_map(t_data *data)
 {
 	int n;
@@ -103,5 +133,6 @@ int				analyze_map(t_data *data)
 	textures(data);
 	colors_f(n, n2, data, colors);
 	colors_c(n, n2, data, colors);
+	error_colors(colors);
 	return (0);
 }

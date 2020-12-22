@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 09:14:24 by dsantama          #+#    #+#             */
-/*   Updated: 2020/12/21 10:44:27 by dsantama         ###   ########.fr       */
+/*   Updated: 2020/12/22 11:00:32 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ typedef struct		s_data
 	char				*texture_sprite;
 	char				*f;
 	char				*c;
-	char				*map;
 	char				*x;
 	char				*y;
 	int					elements;
@@ -57,6 +56,11 @@ typedef struct		s_colors
 	char			*g_c;
 	char			*b_c;
 }					t_colors;
+
+typedef struct		s_parse
+{
+	char			*map;
+}					t_parse;
 
 int					get_next_line(int fd, char **line);
 int					analyze_map(t_data *data);

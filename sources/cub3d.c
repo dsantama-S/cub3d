@@ -6,29 +6,35 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 10:16:29 by dsantama          #+#    #+#             */
-/*   Updated: 2020/12/21 10:42:31 by dsantama         ###   ########.fr       */
+/*   Updated: 2020/12/22 12:30:50 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static int		define_map(int fd, t_data *data, int lines)
+static int		define_map(int fd, t_parse *parse)
 {
 	char	*map;
-	char	c;
-	int		n;
+	char	*aux;
+	char	*aux2;
+	char	*aux3;
+	char	*line;
 
-	n = 0;
-	map = malloc(lines);
-	if (!map)
-		return (0);
-	while (read(fd, &c, sizeof(c) != 0))
+	map = ft_strdup("");
+	while (get_next_line(fd, &line) != 0)
 	{
-		map[n] = c;
-		n++;
+		aux = ft_strjoin(map, line);
+		free(map);
+		map = aux;
+		aux2 = ft_strjoin(map, "\n");
+		free(map);
+		map = aux2;
 	}
+	aux3 = ft_strjoin(map, line);
+	free(map);
+	map = aux3;
 	close(fd);
-	data->map = map;
+	parse->map = map;
 	return (0);
 }
 
@@ -81,11 +87,10 @@ static int		define_path(int fd, char *str, t_data *data, int lines)
 		if (data->elements == 8)
 			break ;
 	}
-	define_map(fd, data, lines);
 	return (0);
 }
 
-static int		read_map(int fd, char *path, t_data *data)
+static int		read_map(int fd, char *path, t_data *data, t_parse *parse)
 {
 	char	*str;
 	char	c;
@@ -105,6 +110,7 @@ static int		read_map(int fd, char *path, t_data *data)
 		close(fd);
 		fd = open(path, O_RDONLY);
 		define_path(fd, str, data, lines);
+		define_map(fd, parse);
 		free(str);
 	}
 	return (0);
@@ -114,13 +120,19 @@ int				read_map_cub(char *path)
 {
 	int		fd;
 	t_data	*data;
+	t_parse *parse;
 
+	parse = ((t_parse *)malloc(sizeof(t_parse)));
+	if (!parse)
+		return (0);
 	data = ((t_data *)malloc(sizeof(t_data)));
 	if (!data)
 		return (0);
 	fd = open(path, O_RDONLY);
-	read_map(fd, path, data);
+	read_map(fd, path, data, parse);
 	analyze_map(data);
-	printf("%s\n", data->map);
+	free(data);
+	printf("%s\n", parse->map);
+	free(parse);
 	return (0);
 }
