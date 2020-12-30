@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/22 10:55:05 by dsantama          #+#    #+#             */
-/*   Updated: 2020/12/30 10:31:58 by dsantama         ###   ########.fr       */
+/*   Updated: 2020/12/30 12:54:09 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,28 @@ void				error_colors(t_colors *colors, t_data *data)
 	}
 }
 
-void				error_map(t_parse *parse)
+void				error_map(t_parse *parse, t_data *data)
 {
-	if (parse){}
+	int		n;
+	int		c;
+	int		bytes;
+
+	n = 0;
+	c = 0;
+	bytes = ft_strlen(parse->map);
+	while (n < bytes)
+	{
+		if (parse->map[n] == 'N' || parse->map[n] == 'S' ||
+		parse->map[n] == 'E' || parse->map[n] == 'W')
+			c++;
+		if (parse->map[n] != 'N' && parse->map[n] != 'S' &&
+		parse->map[n] != 'E' && parse->map[n] != 'W' &&
+		parse->map[n] != '1' && parse->map[n] != ' ' &&
+		parse->map[n] != '0' && parse->map[n] != '2' &&
+		parse->map[n] != '\n')
+			data->error = -1;
+		n++;
+	}
+	if (c > 1 || c == 0)
+		data->error = -1;
 }

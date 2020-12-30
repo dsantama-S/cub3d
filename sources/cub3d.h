@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 09:14:24 by dsantama          #+#    #+#             */
-/*   Updated: 2020/12/30 10:26:20 by dsantama         ###   ########.fr       */
+/*   Updated: 2020/12/30 13:14:59 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,23 @@ typedef struct		s_colors
 	char			*b_c;
 }					t_colors;
 
+typedef struct		s_rayc
+{
+	double			posx;
+	double			posy;
+	double			dirx;
+	double			diry;
+	double			planex;
+	double			planey;
+	double			time;
+	double			oldtime;
+}					t_rayc;
+
+typedef struct  s_vars {
+    void        *mlx;
+    void        *win;
+}               t_vars;
+
 typedef struct		s_parse
 {
 	char			*map;
@@ -66,6 +83,8 @@ typedef struct		s_parse
 int					get_next_line(int fd, char **line);
 int					analyze_map(t_data *data, t_parse *parse);
 void				error_colors(t_colors *colors, t_data *data);
-void				error_map(t_parse *parse);
+void				error_map(t_parse *parse, t_data *data);
 int					read_map_cub(char *path);
+int					initialize(t_colors *colors, t_parse *parse, t_data *data);
+int					start(t_data *data, t_rayc *rayc);
 #endif

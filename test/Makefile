@@ -1,4 +1,4 @@
-SRCS			= test3.c
+SRCS			= testraycaster.c
 OBJS			= $(SRCS:.c=.o)
 
 CC				= gcc
