@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 10:16:29 by dsantama          #+#    #+#             */
-/*   Updated: 2020/12/22 12:30:50 by dsantama         ###   ########.fr       */
+/*   Updated: 2020/12/30 10:24:34 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,9 +128,15 @@ int				read_map_cub(char *path)
 	data = ((t_data *)malloc(sizeof(t_data)));
 	if (!data)
 		return (0);
+	data->error = 0;
 	fd = open(path, O_RDONLY);
 	read_map(fd, path, data, parse);
-	analyze_map(data);
+	analyze_map(data, parse);
+	if (data->error == -1)
+	{
+		write(1, "Ha ocurrido un error en la configuración del mapa.\n", 52);
+		return (-1);
+	}
 	free(data);
 	printf("%s\n", parse->map);
 	free(parse);

@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 11:15:41 by dsantama          #+#    #+#             */
-/*   Updated: 2020/12/22 13:31:33 by dsantama         ###   ########.fr       */
+/*   Updated: 2020/12/30 10:25:51 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,6 @@ static void		colors_f(int n, int n2, t_data *data, t_colors *colors)
 	while (str3[n] != ',' && str3[n] != '\0')
 		aux2[n2++] = str3[n++];
 	colors->r_f = aux2;
-	printf("%s\n", colors->r_f);
-	printf("%s\n", colors->g_f);
-	printf("%s\n", colors->b_f);
 }
 
 static void		colors_c(int n, int n2, t_data *data, t_colors *colors)
@@ -89,11 +86,12 @@ static void		colors_c(int n, int n2, t_data *data, t_colors *colors)
 	char	*str;
 	char	*str2;
 	char	*str3;
-	char	aux[4];
-	char	aux2[4];
-	
+	char	*aux;
+	char	*aux2;
+
+	aux = ft_strdup("");
 	ft_bzero(aux, 4);
-	ft_bzero(aux2, 4);
+	aux2 = ft_strdup("");
 	str = ft_strnchr(data->c, ',', 2);
 	str++;
 	colors->b_c = str;
@@ -109,23 +107,16 @@ static void		colors_c(int n, int n2, t_data *data, t_colors *colors)
 	while (str3[n] != ',' && str3[n] != '\0')
 		aux2[n2++] = str3[n++];
 	colors->r_c = aux2;
-	printf("%s\n", colors->r_f);
-	printf("%s\n", colors->g_f);
-	printf("%s\n", colors->b_f);
-	printf("%s\n", colors->r_c);
-	printf("%s\n", colors->g_c);
-	printf("%s\n", colors->b_c);
 }
 
-int				analyze_map(t_data *data)
+int				analyze_map(t_data *data, t_parse *parse)
 {
-	int n;
-	int n2;
+	int			n;
+	int			n2;
+	t_colors	*colors;
 
 	n = 0;
 	n2 = 0;
-	t_colors *colors;
-
 	colors = ((t_colors *)malloc(sizeof(t_colors)));
 	if (!colors)
 		return (0);
@@ -133,6 +124,7 @@ int				analyze_map(t_data *data)
 	textures(data);
 	colors_f(n, n2, data, colors);
 	colors_c(n, n2, data, colors);
-	error_colors(colors);
+	error_colors(colors, data);
+	error_map(parse);
 	return (0);
 }

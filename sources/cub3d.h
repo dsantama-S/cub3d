@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 09:14:24 by dsantama          #+#    #+#             */
-/*   Updated: 2020/12/22 11:00:32 by dsantama         ###   ########.fr       */
+/*   Updated: 2020/12/30 10:26:20 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct		s_data
 	char				*x;
 	char				*y;
 	int					elements;
+	int					error;
 }					t_data;
 
 typedef struct		s_colors
@@ -63,7 +64,8 @@ typedef struct		s_parse
 }					t_parse;
 
 int					get_next_line(int fd, char **line);
-int					analyze_map(t_data *data);
-void				error_colors(t_colors *colors);
+int					analyze_map(t_data *data, t_parse *parse);
+void				error_colors(t_colors *colors, t_data *data);
+void				error_map(t_parse *parse);
 int					read_map_cub(char *path);
 #endif
