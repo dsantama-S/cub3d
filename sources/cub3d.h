@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 09:14:24 by dsantama          #+#    #+#             */
-/*   Updated: 2020/12/30 13:14:59 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/01/05 09:04:25 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ typedef struct		s_colors
 
 typedef struct		s_rayc
 {
+	int				mapHeight;
+	int				mapWidth;
 	double			posx;
 	double			posy;
 	double			dirx;
@@ -70,10 +72,11 @@ typedef struct		s_rayc
 	double			oldtime;
 }					t_rayc;
 
-typedef struct  s_vars {
-    void        *mlx;
-    void        *win;
-}               t_vars;
+typedef struct		s_vars
+{
+	void			*mlx;
+	void			*win;
+}					t_vars;
 
 typedef struct		s_parse
 {
