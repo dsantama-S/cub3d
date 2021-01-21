@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/22 10:55:05 by dsantama          #+#    #+#             */
-/*   Updated: 2021/01/21 13:17:22 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/01/21 14:12:32 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 //error de la resolución cuando no escribo numero
 //error de los colores cuando no escribo numero
+
 
 void				error_colors(t_colors *colors, t_data *data)
 {
