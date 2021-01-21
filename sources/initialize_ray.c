@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 12:34:05 by dsantama          #+#    #+#             */
-/*   Updated: 2021/01/21 13:18:04 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/01/21 13:21:36 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ t_rayc *rayc, int worldmap[rayc->mapwidth][rayc->mapheight])
 	}
 }
 
-void		worldmap(t_colors *colors, t_rayc *rayc, t_parse *parse)
+void			worldmap(t_colors *colors, t_rayc *rayc, t_parse *parse)
 {
 	int		worldmap[rayc->mapwidth][rayc->mapheight];
 	int		x;
