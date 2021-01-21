@@ -6,11 +6,14 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/22 10:55:05 by dsantama          #+#    #+#             */
-/*   Updated: 2020/12/30 12:54:09 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/01/21 13:17:22 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+//error de la resolución cuando no escribo numero
+//error de los colores cuando no escribo numero
 
 void				error_colors(t_colors *colors, t_data *data)
 {

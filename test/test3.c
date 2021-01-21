@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 09:40:27 by dsantama          #+#    #+#             */
-/*   Updated: 2020/11/26 09:06:19 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/01/21 10:48:16 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,3 +120,23 @@ int     main(void)
 	mlx_key_hook(vars.win, key_hook, vars.mlx);
 	mlx_loop(vars.mlx);
 }
+
+static void		printmap(t_rayc *rayc, int worldmap[rayc->mapwidth][rayc->mapheight])
+{
+	int x;
+	int y;
+
+	x = 0;
+	y = 0;
+	 while (y < rayc->mapheight)
+    {
+        while (x < rayc->mapwidth)
+        {
+			printf("%c", worldmap[x][y]);
+            x++;
+        }
+        x = 0;
+        y++;
+    }
+}
+
