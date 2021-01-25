@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/29 12:48:21 by dsantama          #+#    #+#             */
-/*   Updated: 2021/01/21 10:49:25 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/01/25 12:49:32 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ typedef struct		s_list
 	struct s_list	*next;
 }					t_list;
 
+double		ft_absolute(double x);
 int					ft_atoi(const char *s);
 void				ft_bzero(void *s, size_t n);
 void				*ft_calloc(size_t number, size_t size);

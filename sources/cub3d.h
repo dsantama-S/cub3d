@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 09:14:24 by dsantama          #+#    #+#             */
-/*   Updated: 2021/01/21 11:43:32 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/01/25 14:01:10 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,11 @@
 
 typedef struct		s_data
 {
+	void				*img;
+    char				*addr;
+    int					bits_per_pixel;
+    int					line_length;
+	int					endian;
 	char				*r;
 	char				*no;
 	char				*texture_no;
@@ -62,14 +67,32 @@ typedef struct		s_rayc
 {
 	int				mapheight;
 	int				mapwidth;
+	int				mapx;
+	int				mapy;
+	int				stepx;
+	int				stepy;
+	int				hit;
+	int				side;
+	int				lineheight;
+	int				drawstart;
+	int				drawend;
+	double			perpwalldist;
+	double			sidedistx;
+	double			sidedisty;
+	double			deltadistx;
+	double			deltadisty;
+	double			camerax;
 	double			posx;
 	double			posy;
 	double			dirx;
 	double			diry;
+	double			raydirx;
+	double			raydiry;
 	double			planex;
 	double			planey;
 	double			time;
 	double			oldtime;
+	unsigned int	color;
 }					t_rayc;
 
 typedef struct		s_vars
@@ -87,8 +110,12 @@ int					get_next_line(int fd, char **line);
 int					analyze_map(t_data *data, t_parse *parse);
 void				error_colors(t_colors *colors, t_data *data);
 void				error_map(t_parse *parse, t_data *data);
-void				worldmap(t_colors *colors, t_rayc *rayc, t_parse *parse);
+void				worldmap(t_colors *colors, t_rayc *rayc, t_parse *parse,
+t_data *data);
 int					read_map_cub(char *path);
+void 				ray_starts(t_rayc *rayc, t_data *data,
+int worldmap[rayc->mapwidth][rayc->mapheight]);
 int					initialize(t_colors *colors, t_parse *parse, t_data *data);
 int					start(t_data *data, t_rayc *rayc);
+void				verline(t_data *data, int x, t_rayc *rayc);
 #endif
