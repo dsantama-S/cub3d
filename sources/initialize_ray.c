@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 12:34:05 by dsantama          #+#    #+#             */
-/*   Updated: 2021/01/25 12:19:41 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/01/27 13:13:10 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,21 +69,14 @@ t_rayc *rayc, int worldmap[rayc->mapwidth][rayc->mapheight])
 	}
 }
 
-void			worldmap(t_colors *colors, t_rayc *rayc, t_parse *parse, t_data *data)
+int				worldmap(t_colors *colors, t_rayc *rayc, t_parse *parse, t_data *data)
 {
-	int		worldmap[rayc->mapwidth][rayc->mapheight];
-	int		x;
-
+	int			worldmap[rayc->mapwidth][rayc->mapheight];
+	t_vars		vars;
+	int			x;
+	
 	x = 0;
 	mapsquare(x, parse, rayc, worldmap);
-	ray_starts(rayc, data, worldmap);
-	if (colors){}
-}
-
-int				start(t_data *data, t_rayc *rayc)
-{
-	t_vars		vars;
-
 	rayc->dirx = -1;
 	rayc->diry = 0;
 	rayc->planex = 0;
@@ -93,7 +86,9 @@ int				start(t_data *data, t_rayc *rayc)
 	vars.mlx = mlx_init();
 	vars.win = mlx_new_window(vars.mlx, ft_atoi(data->x),
 	ft_atoi(data->y), "Cub3d");
+	ray_starts(vars, rayc, data, worldmap);
 	mlx_loop(vars.mlx);
+	if (colors){}
 	return (0);
 }
 
@@ -105,13 +100,11 @@ int				initialize(t_colors *colors, t_parse *parse, t_data *data)
 
 	y = 0;
 	x = 0;
-	if (data){}
 	rayc = ((t_rayc *)malloc(sizeof(t_rayc)));
 	if (!rayc)
 		return (0);
 	rayc->mapwidth = 0;
 	posmap(x, y, parse, rayc);
-	start(data, rayc);
 	worldmap(colors, rayc, parse, data);
 	return (0);
 }

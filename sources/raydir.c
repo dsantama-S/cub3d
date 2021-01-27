@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 09:30:17 by dsantama          #+#    #+#             */
-/*   Updated: 2021/01/25 14:00:36 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/01/27 13:23:18 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int x, int width)
 static void			rayprint(t_rayc *rayc, int worldmap[rayc->mapwidth][rayc->mapheight],
 int height)
 {
-	rayc->lineheight = height / rayc->perpwalldist;
+	rayc->lineheight = (int)(height / rayc->perpwalldist);
 	rayc->drawstart = -rayc->lineheight / 2 + height / 2;
 	if (rayc->drawstart < 0)
 		rayc->drawstart = 0;
@@ -97,10 +97,10 @@ int height)
 	if (worldmap[rayc->mapx][rayc->mapy] == 1)
 		rayc->color = 0x000000FF;
 	if (rayc->side == 1)
-		rayc->color = rayc->color / 2;
+		rayc->color = rayc->color / 2;	
 }
 
-void			ray_starts(t_rayc *rayc, t_data *data,
+void			ray_starts(t_vars vars, t_rayc *rayc, t_data *data,
 int worldmap[rayc->mapwidth][rayc->mapheight])
 {
 	int x;
@@ -114,7 +114,11 @@ int worldmap[rayc->mapwidth][rayc->mapheight])
 	{
 		raycast(rayc, worldmap, x, width);
 		rayprint(rayc, worldmap, height);
-		verline(data, x, rayc);
+		if (rayc->drawend < 0)
+			rayc->drawend = 0;
+		if (rayc->drawstart > height)
+			rayc->drawstart = height;
+		verline(vars, data, x, rayc);
 		x++;
 	}
 }

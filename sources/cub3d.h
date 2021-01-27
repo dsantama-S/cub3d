@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 09:14:24 by dsantama          #+#    #+#             */
-/*   Updated: 2021/01/25 14:01:10 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/01/26 11:47:08 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,12 +110,12 @@ int					get_next_line(int fd, char **line);
 int					analyze_map(t_data *data, t_parse *parse);
 void				error_colors(t_colors *colors, t_data *data);
 void				error_map(t_parse *parse, t_data *data);
-void				worldmap(t_colors *colors, t_rayc *rayc, t_parse *parse,
+int					worldmap(t_colors *colors, t_rayc *rayc, t_parse *parse,
 t_data *data);
 int					read_map_cub(char *path);
-void 				ray_starts(t_rayc *rayc, t_data *data,
+void 				ray_starts(t_vars vars, t_rayc *rayc, t_data *data,
 int worldmap[rayc->mapwidth][rayc->mapheight]);
 int					initialize(t_colors *colors, t_parse *parse, t_data *data);
 int					start(t_data *data, t_rayc *rayc);
-void				verline(t_data *data, int x, t_rayc *rayc);
+void				verline(t_vars vars, t_data *data, int x, t_rayc *rayc);
 #endif
