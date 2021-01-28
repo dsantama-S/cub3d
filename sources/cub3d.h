@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 09:14:24 by dsantama          #+#    #+#             */
-/*   Updated: 2021/01/26 11:47:08 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/01/28 13:05:18 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ typedef struct		s_vars
 	void			*win;
 	void			*img;
     char			*addr;
+	char			*img_ptr;
     int				bits_per_pixel;
     int				line_length;
 	int				endian;

@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 09:30:17 by dsantama          #+#    #+#             */
-/*   Updated: 2021/01/27 13:23:18 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/01/28 13:16:05 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,20 +78,9 @@ int x, int width)
 	dda(rayc, worldmap);
 }
 
-static void			rayprint(t_rayc *rayc, int worldmap[rayc->mapwidth][rayc->mapheight],
-int height, int line_height)
+static void			rayprint(t_rayc *rayc, int height, int *line_height)
 {
-	*line_height = (int)(height / rayc->perpwalldist);
-	rayc->drawstart = -line_height / 2 + height / 2;
-	if (rayc->drawstart < 0)
-		rayc->drawstart = 0;
-	rayc->drawend = line_height / 2 + height / 2;
-	if (rayc->drawend > height)
-		rayc->drawend = height;
-	if (worldmap[rayc->mapx][rayc->mapy] == '1')
-		rayc->color = 0x000000FF;
-	if (rayc->side == 1)
-		rayc->color = rayc->color / 2;	
+	*line_height = (int)(height / rayc->perpwalldist);	
 }
 
 void			ray_starts(t_vars vars, t_rayc *rayc, t_data *data,
@@ -108,8 +97,18 @@ int worldmap[rayc->mapwidth][rayc->mapheight])
 	while (x < width)
 	{
 		raycast(rayc, worldmap, x, width);
-		rayprint(rayc, worldmap, height, &line_height);
-		verline(vars, data, x, rayc);
+		rayprint(rayc, height, &line_height);
+		rayc->drawstart = -line_height / 2 + height / 2;
+		if (rayc->drawstart < 0)
+			rayc->drawstart = 0;
+		rayc->drawend = line_height / 2 + height / 2;
+		if (rayc->drawend > height)
+			rayc->drawend = height;
+		if (worldmap[rayc->mapx][rayc->mapy] == '1')
+			rayc->color = 0x000000FF;
+		if (rayc->side == 1)
+			rayc->color = rayc->color / 2;
+		skyline(vars, data, x, rayc);
 		x++;
 	}
 }
