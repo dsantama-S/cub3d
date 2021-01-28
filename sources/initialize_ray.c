@@ -86,6 +86,9 @@ int				worldmap(t_colors *colors, t_rayc *rayc, t_parse *parse, t_data *data)
 	vars.mlx = mlx_init();
 	vars.win = mlx_new_window(vars.mlx, ft_atoi(data->x),
 	ft_atoi(data->y), "Cub3d");
+	vars.img = mlx_new_image(vars.mlx, ft_atoi(data->x), ft_atoi(data->y));
+	vars.img_ptr = mlx_get_data_addr(vars.img, &(vars.bits_per_pixel), &(vars.line_length),
+	&(vars.endian));
 	ray_starts(vars, rayc, data, worldmap);
 	mlx_loop(vars.mlx);
 	if (colors){}

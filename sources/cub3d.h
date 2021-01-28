@@ -29,11 +29,6 @@
 
 typedef struct		s_data
 {
-	void				*img;
-    char				*addr;
-    int					bits_per_pixel;
-    int					line_length;
-	int					endian;
 	char				*r;
 	char				*no;
 	char				*texture_no;
@@ -99,6 +94,11 @@ typedef struct		s_vars
 {
 	void			*mlx;
 	void			*win;
+	void			*img;
+    char			*addr;
+    int				bits_per_pixel;
+    int				line_length;
+	int				endian;
 }					t_vars;
 
 typedef struct		s_parse
@@ -117,5 +117,5 @@ void 				ray_starts(t_vars vars, t_rayc *rayc, t_data *data,
 int worldmap[rayc->mapwidth][rayc->mapheight]);
 int					initialize(t_colors *colors, t_parse *parse, t_data *data);
 int					start(t_data *data, t_rayc *rayc);
-void				verline(t_vars vars, t_data *data, int x, t_rayc *rayc);
+void				skyline(t_vars vars, t_data *data, int x, t_rayc *rayc);
 #endif

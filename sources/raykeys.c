@@ -21,7 +21,7 @@ static void            my_mlx_pixel_put(t_data *data, int x, int y, int color)
     *(unsigned int*)dst = color;
 }
 
-void verline(t_vars vars, t_data *data, int x, t_rayc *rayc)
+void skyline(t_vars vars, t_data *data, int x, t_rayc *rayc)
 {
 	t_data 	img;
 	int		c;
@@ -29,9 +29,6 @@ void verline(t_vars vars, t_data *data, int x, t_rayc *rayc)
 
 	c = rayc->drawend;
 	y = rayc->drawstart;
-	img.img = mlx_new_image(vars.mlx, ft_atoi(data->x), ft_atoi(data->y));
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
-	&img.endian);
     while (c < rayc->drawstart)
     {
 		my_mlx_pixel_put(&img, x, c, 0x000000FF);

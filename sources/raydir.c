@@ -43,58 +43,52 @@ int worldmap[rayc->mapwidth][rayc->mapheight])
 {
 	while (rayc->hit == 0)
 	{
-		if (rayc->sidedistx < rayc->sidedisty)
+		if (rayc->sidedisty < rayc->sidedistx)
 		{
-			rayc->sidedistx += rayc->deltadistx;
-			rayc->mapx += rayc->stepx;
+			rayc->sidedisty += rayc->deltadisty;
+			rayc->mapy += rayc->stepy;
 			rayc->side = 0;
 		}
 		else
 		{
-			rayc->sidedisty += rayc->deltadisty;
-			rayc->mapy += rayc->stepy;
+			rayc->sidedistx += rayc->deltadistx;
+			rayc->mapx += rayc->stepx;
 			rayc->side = 1;
 		}
-		if (worldmap[rayc->mapx][rayc->mapy] > 0)
+		if (worldmap[rayc->mapx][rayc->mapy] == '1')
 			rayc->hit = 1;
 	}
 	if (rayc->side == 0)
-		rayc->perpwalldist = (rayc->mapx - rayc->posx + (1 - rayc->stepx) / 2) / rayc->raydirx;
+		rayc->perpwalldist = (rayc->mapy - rayc->posy + (1 - rayc->stepy) / 2) / rayc->raydiry;
 	else
-		rayc->perpwalldist = (rayc->mapy - rayc->posy + (1 - rayc->stepy) / 2) / rayc->raydiry;		
+		rayc->perpwalldist = (rayc->mapx - rayc->posx + (1 - rayc->stepx) / 2) / rayc->raydirx;		
 }
 
 static void			raycast(t_rayc *rayc, int worldmap[rayc->mapwidth][rayc->mapheight],
 int x, int width)
 {
-	rayc->camerax = 2 * x / width - 1;
+	rayc->camerax = 2 * x / (double)width - 1;
 	rayc->raydirx = rayc->dirx + rayc->planex * rayc->camerax;
 	rayc->raydiry = rayc->diry + rayc->planey * rayc->camerax;
-	rayc->mapx = rayc->posx;
-	rayc->mapy = rayc->posy;
-	if (rayc->raydirx == 0)
-		rayc->deltadistx = 0;
-	else
-		rayc->deltadistx = ft_absolute(1 / rayc->raydirx);
-	if (rayc->raydiry == 0)
-		rayc->deltadisty = 0;
-	else
-		rayc->deltadisty = ft_absolute(1 / rayc->raydiry);
+	rayc->mapx = (int)rayc->posx;
+	rayc->mapy = (int)rayc->posy;
+	rayc->deltadistx = ft_absolute(1 / rayc->raydirx);
+	rayc->deltadisty = ft_absolute(1 / rayc->raydiry);
 	cal_step(rayc);
 	dda(rayc, worldmap);
 }
 
 static void			rayprint(t_rayc *rayc, int worldmap[rayc->mapwidth][rayc->mapheight],
-int height)
+int height, int line_height)
 {
-	rayc->lineheight = (int)(height / rayc->perpwalldist);
-	rayc->drawstart = -rayc->lineheight / 2 + height / 2;
+	*line_height = (int)(height / rayc->perpwalldist);
+	rayc->drawstart = -line_height / 2 + height / 2;
 	if (rayc->drawstart < 0)
 		rayc->drawstart = 0;
-	rayc->drawend = rayc->lineheight / 2 + height / 2;
-	if (rayc->drawend >= 0)
-		rayc->drawend = height - 1;
-	if (worldmap[rayc->mapx][rayc->mapy] == 1)
+	rayc->drawend = line_height / 2 + height / 2;
+	if (rayc->drawend > height)
+		rayc->drawend = height;
+	if (worldmap[rayc->mapx][rayc->mapy] == '1')
 		rayc->color = 0x000000FF;
 	if (rayc->side == 1)
 		rayc->color = rayc->color / 2;	
@@ -106,6 +100,7 @@ int worldmap[rayc->mapwidth][rayc->mapheight])
 	int x;
 	int width;
 	int height;
+	int line_height;
 
 	x = 0;
 	width = ft_atoi(data->x);
@@ -113,11 +108,7 @@ int worldmap[rayc->mapwidth][rayc->mapheight])
 	while (x < width)
 	{
 		raycast(rayc, worldmap, x, width);
-		rayprint(rayc, worldmap, height);
-		if (rayc->drawend < 0)
-			rayc->drawend = 0;
-		if (rayc->drawstart > height)
-			rayc->drawstart = height;
+		rayprint(rayc, worldmap, height, &line_height);
 		verline(vars, data, x, rayc);
 		x++;
 	}
