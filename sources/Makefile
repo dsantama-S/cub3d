@@ -1,5 +1,5 @@
 LIB				= cub3d.h
-SRCS			= get_next_line.c cub3d.c analyze.c error.c initialize_ray.c raydir.c raykeys.c main.c
+SRCS			= get_next_line.c cub3d.c analyze.c error.c initialize_ray.c raydir.c rayc_sprite.c rayc_sprite2.c load_textures.c raykeys.c window.c main.c
 OBJS			= $(SRCS:.c=.o)
 
 CC				= gcc

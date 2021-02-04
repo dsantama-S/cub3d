@@ -58,8 +58,66 @@ typedef struct		s_colors
 	char			*b_c;
 }					t_colors;
 
+typedef struct	s_rendering
+{
+	double	x;
+	double	y;
+	double	inv_det;
+	double	transform_x;
+	double	transform_y;
+	int		screen_x;
+	int		start_x;
+	int		start_y;
+	int		end_x;
+	int		end_y;
+	int		tex_x;
+	int		tex_y;
+	int		height;
+	int		width;
+	double	*dist_wall;
+}				t_rendering;
+
+typedef struct	s_sprite
+{
+	int		order;
+	double	distance;
+	double	coord_x;
+	double	coord_y;
+	void	*img_ptr;
+	int		*get_data;
+	int		bits_per_pixel;
+	int		size_line;
+	int		endian;
+	int		width;
+	int		height;
+	int		color;
+}				t_sprite;
+
+typedef struct	s_texture
+{
+	void	*img_ptr;
+	int		bits_per_pixel;
+	int		size_line;
+	int		endian;
+	int		*get_data;
+	int		width;
+	int		heigh;
+}				t_texture;
+
 typedef struct		s_rayc
 {
+	t_texture		north;
+	t_texture		south;
+	t_texture		east;
+	t_texture		west;
+	t_sprite		*sprite;
+	t_rendering		render;
+	char			direction;
+	int				sprites;
+	unsigned int	color_roof;
+	unsigned int	color_floor;
+	int				width_screen;
+	int				height_screen;
 	int				mapheight;
 	int				mapwidth;
 	int				mapx;
@@ -71,6 +129,7 @@ typedef struct		s_rayc
 	int				lineheight;
 	int				drawstart;
 	int				drawend;
+	double			*dist_wall;
 	double			perpwalldist;
 	double			sidedistx;
 	double			sidedisty;
@@ -96,10 +155,14 @@ typedef struct		s_vars
 	void			*win;
 	void			*img;
     char			*addr;
-	char			*img_ptr;
+	void			*img_ptr;
+	int				*get_data;
+	void			*new_image;
     int				bits_per_pixel;
     int				line_length;
 	int				endian;
+	int				width;
+	int				height;
 }					t_vars;
 
 typedef struct		s_parse
@@ -107,6 +170,18 @@ typedef struct		s_parse
 	char			*map;
 }					t_parse;
 
+void				free_sprite(t_rayc *rayc)
+void				last_render_sprite(t_rayc *rayc, int x, int i, t_vars *vars);
+void				ray_sprite(t_rayc *rayc, t_data *data, t_vars *vars);
+void				set_texture(t_env *env, int x);
+void				rayprint(t_rayc *rayc, int height, t_vars *vars,
+int x);
+t_rayc				*init_frame(t_rayc *rayc, t_vars *vars, t_data *data,
+int worldmap[rayc->mapwidth][rayc->mapheight]);
+t_rayc				*init_textures(t_rayc *rayc, t_data *data, t_vars *vars);
+t_rayc				*orientation(t_rayc *rayc);
+int					inwindow(t_rayc *rayc, t_vars *vars, t_data *data,
+int worldmap[rayc->mapwidth][rayc->mapheight]);
 int					get_next_line(int fd, char **line);
 int					analyze_map(t_data *data, t_parse *parse);
 void				error_colors(t_colors *colors, t_data *data);

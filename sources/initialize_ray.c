@@ -18,6 +18,7 @@ static void		posmap(int x, int y, t_parse *parse, t_rayc *rayc)
 	int n;
 
 	n = 0;
+	rayc->sprites = 0;
 	while (parse->map[n] != '\0')
 	{
 		if (parse->map[n] == '\n')
@@ -27,11 +28,16 @@ static void		posmap(int x, int y, t_parse *parse, t_rayc *rayc)
 			y++;
 			x = 0;
 		}
+		if (parse->map[n] == '2')
+		{
+			rayc->sprites++;
+		}
 		if (parse->map[n] == 'N' || parse->map[n] == 'S' ||
 		parse->map[n] == 'E' || parse->map[n] == 'W')
 		{
-			rayc->posy = y + 1;
-			rayc->posx = x;
+			rayc->direction = parse->map[n];
+			rayc->posy = (y + 1) + 0.5;
+			rayc->posx = x + 0.5;
 		}
 		n++;
 		x++;
@@ -72,26 +78,17 @@ t_rayc *rayc, int worldmap[rayc->mapwidth][rayc->mapheight])
 int				worldmap(t_colors *colors, t_rayc *rayc, t_parse *parse, t_data *data)
 {
 	int			worldmap[rayc->mapwidth][rayc->mapheight];
-	t_vars		vars;
+	t_vars		*vars;
 	int			x;
 	
 	x = 0;
+	rayc->color_floor = (ft_atoi(colors->r_f) << 16) + (ft_atoi(colors->g_f) << 8) + \
+	(ft_atoi(colors->b_f);
+	rayc->color_roof = (ft_atoi(colors->r_c) << 16) + (ft_atoi(colors->g_c) << 8) + \
+	(ft_atoi(colors->b_c);
 	mapsquare(x, parse, rayc, worldmap);
-	rayc->dirx = -1;
-	rayc->diry = 0;
-	rayc->planex = 0;
-	rayc->planey = 0.66;
-	rayc->time = 0;
-	rayc->oldtime = 0;
-	vars.mlx = mlx_init();
-	vars.win = mlx_new_window(vars.mlx, ft_atoi(data->x),
-	ft_atoi(data->y), "Cub3d");
-	vars.img = mlx_new_image(vars.mlx, ft_atoi(data->x), ft_atoi(data->y));
-	vars.img_ptr = mlx_get_data_addr(vars.img, &(vars.bits_per_pixel), &(vars.line_length),
-	&(vars.endian));
-	ray_starts(vars, rayc, data, worldmap);
-	mlx_loop(vars.mlx);
-	if (colors){}
+	orientation(rayc);
+	inwindow(rayc, vars, data, worldmap);
 	return (0);
 }
 
