@@ -6,102 +6,99 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 09:30:17 by dsantama          #+#    #+#             */
-/*   Updated: 2021/02/05 08:39:57 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/02/05 13:08:16 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include "mlx/mlx.h"
 
-static void		cal_step(t_rayc *rayc, t_vars *vars)
+static void		cal_step(t_vars *vars)
 {
-	rayc->hit = 0;
-	if (rayc->raydirx < vars->endian)
+	vars->rc.hit = 0;
+	if (vars->rc.raydirx < vars->endian)
 	{
-		rayc->stepx = -1;
-		rayc->sidedistx = (rayc->posx - rayc->mapx) * rayc->deltadistx;
+		vars->rc.stepx = -1;
+		vars->rc.sidedistx = (vars->rc.posx - vars->rc.mapx) * vars->rc.deltadistx;
 	}
 	else
 	{
-		rayc->stepx = 1;
-		rayc->sidedistx = (rayc->mapx + 1.0 - rayc->posx);
+		vars->rc.stepx = 1;
+		vars->rc.sidedistx = (vars->rc.mapx + 1.0 - vars->rc.posx);
 	}
-	if (rayc->raydiry < vars->endian)
+	if (vars->rc.raydiry < vars->endian)
 	{
-		rayc->stepy = -1;
-		rayc->sidedisty = (rayc->posy - rayc->mapy) * rayc->deltadisty;
+		vars->rc.stepy = -1;
+		vars->rc.sidedisty = (vars->rc.posy - vars->rc.mapy) * vars->rc.deltadisty;
 	}
 	else
 	{
-		rayc->stepy = 1;
-		rayc->sidedisty = (rayc->mapy + 1.0 - rayc->posy);
+		vars->rc.stepy = 1;
+		vars->rc.sidedisty = (vars->rc.mapy + 1.0 - vars->rc.posy);
 	}
 }
 
-static void		dda(t_rayc *rayc,
-int worldmap[rayc->mapwidth][rayc->mapheight], t_vars *vars)
+static void		dda(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight])
 {
-	while (rayc->hit == 0)
+	while (vars->rc.hit == 0)
 	{
-		if (rayc->sidedistx < rayc->sidedisty)
+		if (vars->rc.sidedistx < vars->rc.sidedisty)
 		{
-			rayc->sidedistx += rayc->deltadistx;
-			rayc->mapx += rayc->stepx;
-			rayc->side = 0;
+			vars->rc.sidedistx += vars->rc.deltadistx;
+			vars->rc.mapx += vars->rc.stepx;
+			vars->rc.side = 0;
 		}
 		else
 		{
-			rayc->sidedisty += rayc->deltadisty;
-			rayc->mapy += rayc->stepy;
-			rayc->side = 1;
+			vars->rc.sidedisty += vars->rc.deltadisty;
+			vars->rc.mapy += vars->rc.stepy;
+			vars->rc.side = 1;
 		}
-		if (worldmap[rayc->mapx][rayc->mapy] == '1')
-			rayc->hit = 1;
+		if (worldmap[vars->rc.mapx][vars->rc.mapy] == '1')
+			vars->rc.hit = 1;
 	}
-	if (rayc->side == vars->endian)
-		rayc->perpwalldist = (rayc->mapx - rayc->posx + (1 - rayc->stepx) / 2) / rayc->raydirx;
+	if (vars->rc.side == vars->endian)
+		vars->rc.perpwalldist = (vars->rc.mapx - vars->rc.posx + (1 - vars->rc.stepx) / 2) / vars->rc.raydirx;
 	else
-		rayc->perpwalldist = (rayc->mapy - rayc->posy + (1 - rayc->stepy) / 2) / rayc->raydiry;		
+		vars->rc.perpwalldist = (vars->rc.mapy - vars->rc.posy + (1 - vars->rc.stepy) / 2) / vars->rc.raydiry;		
 }
 
-static void			raycast(t_rayc *rayc, int x, int width)
+static void			raycast(t_vars *vars, int x, int width)
 {
-	rayc->camerax = 2 * x / (double)width - 1;
-	rayc->raydirx = rayc->dirx + rayc->planex * rayc->camerax;
-	rayc->raydiry = rayc->diry + rayc->planey * rayc->camerax;
-	rayc->mapx = (int)rayc->posx;
-	rayc->mapy = (int)rayc->posy;
-	rayc->deltadistx = ft_absolute(1 / rayc->raydirx);
-	rayc->deltadisty = ft_absolute(1 / rayc->raydiry);
+	vars->rc.camerax = 2 * x / (double)width - 1;
+	vars->rc.raydirx = vars->rc.dirx + vars->rc.planex * vars->rc.camerax;
+	vars->rc.raydiry = vars->rc.diry + vars->rc.planey * vars->rc.camerax;
+	vars->rc.mapx = (int)vars->rc.posx;
+	vars->rc.mapy = (int)vars->rc.posy;
+	vars->rc.deltadistx = fabs(1 / vars->rc.raydirx);
+	vars->rc.deltadisty = fabs(1 / vars->rc.raydiry);
 }
 
-void			rayprint(t_rayc *rayc, int height, t_vars *vars,
-int x)
+void			rayprint(int height, t_vars *vars, int x)
 {
 	int y;
 
-	rayc->lineheight = (height / rayc->perpwalldist);
-	rayc->drawstart = -rayc->lineheight / 2 + height / 2;
-	rayc->drawend = rayc->lineheight / 2 + height / 2;
-	if (rayc->drawstart < 0)
-		rayc->drawstart = 0;
-	if (rayc->drawend >= height)
-		rayc->drawend = height - 1;
-	set_texture(rayc, x, height, vars);
+	vars->rc.lineheight = (height / vars->rc.perpwalldist);
+	vars->rc.drawstart = -vars->rc.lineheight / 2 + height / 2;
+	vars->rc.drawend = vars->rc.lineheight / 2 + height / 2;
+	if (vars->rc.drawstart < 0)
+		vars->rc.drawstart = 0;
+	if (vars->rc.drawend >= height)
+		vars->rc.drawend = height - 1;
+	set_texture(x, height, vars);
 	y = 0;
-	if (rayc->drawend < 0)
-		rayc->drawend = height;
-	y = rayc->drawend;
+	if (vars->rc.drawend < 0)
+		vars->rc.drawend = height;
+	y = vars->rc.drawend;
 	while (y < height)
 	{
-		vars->get_data[x + y * (vars->line_length / 4)] = rayc->color_floor;
-		vars->get_data[x + (height - y - 1) * (vars->line_length / 4)] = rayc->color_roof;
+		vars->get_data[x + y * (vars->size_line / 4)] = vars->rc.color_floor;
+		vars->get_data[x + (height - y - 1) * (vars->size_line / 4)] = vars->rc.color_roof;
 		y++;
 	}
 }
 
-void			ray_starts(t_vars *vars, t_rayc *rayc, t_data *data,
-int worldmap[rayc->mapwidth][rayc->mapheight])
+void			ray_starts(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight])
 {
 	int x;
 	int y;
@@ -110,15 +107,15 @@ int worldmap[rayc->mapwidth][rayc->mapheight])
 
 	x = 0;
 	y = 0;
-	width = ft_atoi(data->x);
-	height = ft_atoi(data->y);
+	width = vars->screen_width;
+	height = vars->screen_height;
 	while (x < width)
 	{
-		raycast(rayc, x, width);
-		cal_step(rayc, vars);
-		dda(rayc, worldmap, vars);
-		rayprint(rayc, height, vars, x);
-		rayc->dist_wall[x] = rayc->perpwalldist;
+		raycast(vars, x, width);
+		cal_step(vars);
+		dda(vars, worldmap);
+		rayprint(height, vars, x);
+		vars->rc.dist_wall[x] = vars->rc.perpwalldist;
 		x++;
 	}
 }

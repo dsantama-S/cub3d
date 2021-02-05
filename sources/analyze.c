@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 11:15:41 by dsantama          #+#    #+#             */
-/*   Updated: 2021/01/05 11:48:21 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/02/05 12:35:26 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,19 @@ static void		resolution(t_data *data)
 	char	*str;
 	char	*str2;
 	char	aux[5];
+	char	aux2[12];
 	int		n;
+	int		i;
 
 	n = 0;
+	i = 0;
 	aux[4] = 0;
-	str = ft_strnchr(data->r, ' ', 1);
+	while (i < 11)
+	{
+		aux2[i] = data->r[i];
+		i++;
+	}
+	str = ft_strchr(aux2, ' ');
 	str++;
 	while (str[n] != ' ' && str[n] != '\0')
 	{
@@ -29,9 +37,11 @@ static void		resolution(t_data *data)
 		n++;
 	}
 	data->x = aux;
-	str2 = ft_strnchr(data->r, ' ', 2);
+	str2 = ft_strnchr(aux2, ' ', 2);
 	str2++;
 	data->y = str2;
+	data->swapx = ft_atoi(data->x);
+	data->swapy = ft_atoi(data->y);
 }
 
 static void		textures(t_data *data)

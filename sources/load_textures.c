@@ -1,54 +1,51 @@
 #include "cub3d.h"
 #include "mlx/mlx.h"
 
-static t_rayc	*put_sprite(char *root_sprite, t_rayc *rayc, int i, t_vars *vars)
+static t_vars	*put_sprite(char *root_sprite, int i, t_vars *vars)
 {
-	if (!(rayc->sprite[i].img_ptr = mlx_xpm_file_to_image(vars->mlx, root_sprite,
-    &rayc->sprite[i].width, &rayc->sprite[i].height)))
-		printf("Something wrong in sprite\n");
-	if (!(rayc->sprite[i].get_data = (int *)mlx_get_data_addr(rayc->sprite[i].img_ptr, &rayc->sprite[i].bits_per_pixel,
-     &rayc->sprite[i].size_line, &rayc->sprite[i].endian)))
-		printf("Something wrong in sprite\n");
-	return (rayc);
+	vars->rc.sprite[i].img_ptr = mlx_xpm_file_to_image(vars->mlx, root_sprite,
+    &vars->rc.sprite[i].width, &vars->rc.sprite[i].height);
+	vars->rc.sprite[i].get_data = (int *)mlx_get_data_addr(vars->rc.sprite[i].img_ptr, &vars->rc.sprite[i].bits_per_pixel,
+    &vars->rc.sprite[i].size_line, &vars->rc.sprite[i].endian);
+	return (vars);
 }
 static t_texture	put_texture(char *root_texture, t_vars *vars)
 {
     t_texture	texture;
-
-	if (!(texture.img_ptr = mlx_xpm_file_to_image(vars->mlx, root_texture, &texture.width, &texture.heigh)))
-		printf("Something wrong in texture\n");
-	if (!(texture.get_data = (int *)mlx_get_data_addr(texture.img_ptr, &texture.bits_per_pixel, &texture.size_line, &texture.endian)))
-		printf("Something wrong in texture\n");
+	
+	texture.img_ptr = mlx_xpm_file_to_image(vars->mlx, root_texture, &texture.width, &texture.height);
+	texture.get_data = (int *)mlx_get_data_addr(texture.img_ptr, &texture.bits_per_pixel, &texture.size_line, &texture.endian);
 	return (texture);
 }
 
-static t_texture	texture_wall(t_rayc *rayc)
+static t_texture	texture_wall(t_vars *vars)
 {
-	if (rayc->side == 0 && rayc->raydirx > 0)
-		return (rayc->east);
-	else if (rayc->side == 0 && rayc->raydirx < 0)
-		return (rayc->west);
-	else if (rayc->side == 1 && rayc->raydiry > 0)
-		return (rayc->south);
+	if (vars->rc.side == 0 && vars->rc.raydirx > 0)
+		return (vars->rc.east);
+	else if (vars->rc.side == 0 && vars->rc.raydirx < 0)
+		return (vars->rc.west);
+	else if (vars->rc.side == 1 && vars->rc.raydiry > 0)
+		return (vars->rc.south);
 	else
-		return (rayc->north);
+		return (vars->rc.north);
 }
 
-t_rayc *init_textures(t_rayc *rayc, t_data *data, t_vars *vars)
+t_vars *init_textures(t_data *data, t_vars *vars)
 {
     int i;
 
-    rayc->north = put_texture(data->texture_no, vars);
-    rayc->south = put_texture(data->texture_so, vars);
-    rayc->east = put_texture(data->texture_ea, vars);
-    rayc->west = put_texture(data->texture_we, vars);
+	if (data){}
+    vars->rc.north = put_texture("../textures/eagle.xpm", vars);
+    vars->rc.south = put_texture("../textures/purplestone.xpm", vars);
+    vars->rc.east = put_texture("../textures/bluestone.xpm", vars);
+    vars->rc.west = put_texture("../textures/wood.xpm", vars);
     i = -1;
-    while (++i < rayc->sprites)
-        rayc = put_sprite(data->texture_sprite, rayc, i, vars);
-    return (rayc);
+    while (++i < vars->rc.sprites)
+        vars = put_sprite("../textures/barril.xpm", i, vars);
+    return (vars);
 }
 
-void	set_texture(t_rayc *rayc, int x, int height, t_vars *vars)
+void	set_texture(int x, int height, t_vars *vars)
 {
 	double		wall_x;
 	int			tex_x;
@@ -56,19 +53,19 @@ void	set_texture(t_rayc *rayc, int x, int height, t_vars *vars)
 	int			y;
 	t_texture	tex_wall;
 
-	tex_wall = texture_wall(rayc);
-	if (rayc->side == 0)
-		wall_x = rayc->posy + rayc->perpwalldist * rayc->raydiry;
+	tex_wall = texture_wall(vars);
+	if (vars->rc.side == 0)
+		wall_x = vars->rc.posy + vars->rc.perpwalldist * vars->rc.raydiry;
 	else
-		wall_x = rayc->posx + rayc->perpwalldist * rayc->raydiry;
+		wall_x = vars->rc.posx + vars->rc.perpwalldist * vars->rc.raydiry;
 	wall_x -= floor(wall_x);
 	tex_x = wall_x * (double)tex_wall.width;
-	y = rayc->drawstart;
-	while (y++ < rayc->drawend)
+	y = vars->rc.drawstart;
+	while (y++ < vars->rc.drawend)
 	{
-		tex_y = (y - height / 2 + rayc->lineheight / 2) * tex_wall.heigh / rayc->lineheight;
+		tex_y = (y - height / 2 + vars->rc.lineheight / 2) * tex_wall.height / vars->rc.lineheight;
 		if (tex_y < 0)
 			return ;
-		vars->get_data[x + y * (vars->line_length / 4)] = tex_wall.get_data[tex_x + tex_y * tex_wall.width];
+		vars->get_data[x + y * (vars->size_line / 4)] = tex_wall.get_data[tex_x + tex_y * tex_wall.width];
 	}
 }

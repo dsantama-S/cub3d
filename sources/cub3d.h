@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 09:14:24 by dsantama          #+#    #+#             */
-/*   Updated: 2021/02/05 08:49:57 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/02/05 13:14:50 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ typedef struct		s_data
 	char				*c;
 	char				*x;
 	char				*y;
+	int					swapx;
+	int					swapy;
 	int					elements;
 	int					error;
 }					t_data;
@@ -102,7 +104,7 @@ typedef struct	s_texture
 	int		endian;
 	int		*get_data;
 	int		width;
-	int		heigh;
+	int		height;
 }				t_texture;
 
 typedef struct		s_rayc
@@ -152,15 +154,18 @@ typedef struct		s_rayc
 
 typedef struct		s_vars
 {
+	t_rayc			rc;
 	void			*mlx;
 	void			*win;
+	int				screen_width;
+	int				screen_height;
 	void			*img;
     char			*addr;
 	void			*img_ptr;
 	int				*get_data;
 	void			*new_image;
     int				bits_per_pixel;
-    int				line_length;
+    int				size_line;
 	int				endian;
 	int				width;
 	int				height;
@@ -171,28 +176,25 @@ typedef struct		s_parse
 	char			*map;
 }					t_parse;
 
-void				free_sprite(t_rayc *rayc);
-void				last_render_sprite(t_rayc *rayc, int x, int i, t_vars *vars);
-void				ray_sprite(t_rayc *rayc, t_data *data, t_vars *vars);
-void				set_texture(t_rayc *rayc, int x, int height, t_vars *vars);
-void				rayprint(t_rayc *rayc, int height, t_vars *vars,
-int x);
-t_rayc				*init_frame(t_rayc *rayc, t_vars *vars, t_data *data,
-int worldmap[rayc->mapwidth][rayc->mapheight]);
-t_rayc				*init_textures(t_rayc *rayc, t_data *data, t_vars *vars);
-t_rayc				*orientation(t_rayc *rayc);
-int					inwindow(t_rayc *rayc, t_vars *vars, t_data *data,
-int worldmap[rayc->mapwidth][rayc->mapheight]);
+void				free_sprite(t_vars *vars);
+void				last_render_sprite(int x, int i, t_vars *vars);
+void				ray_sprite(t_vars *vars);
+t_vars 				*tresolution(t_vars *vars, t_data *data);
+void				set_texture(int x, int height, t_vars *vars);
+void				rayprint(int height, t_vars *vars, int x);
+t_vars				*init_frame(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight]);
+t_vars				*init_textures(t_data *data, t_vars *vars);
+t_vars				*orientation(t_vars *vars);
+int					inwindow(t_vars *vars, t_data *data,
+int worldmap[vars->rc.mapwidth][vars->rc.mapheight]);
 int					get_next_line(int fd, char **line);
 int					analyze_map(t_data *data, t_parse *parse);
 void				error_colors(t_colors *colors, t_data *data);
 void				error_map(t_parse *parse, t_data *data);
-int					worldmap(t_colors *colors, t_rayc *rayc, t_parse *parse,
+t_vars				*worldmap(t_colors *colors, t_vars *vars, t_parse *parse,
 t_data *data);
 int					read_map_cub(char *path);
-void 				ray_starts(t_vars *vars, t_rayc *rayc, t_data *data,
-int worldmap[rayc->mapwidth][rayc->mapheight]);
+void 				ray_starts(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight]);
 int					initialize(t_colors *colors, t_parse *parse, t_data *data);
 int					start(t_data *data, t_rayc *rayc);
-void				skyline(t_vars vars, t_data *data, int x, t_rayc *rayc);
 #endif

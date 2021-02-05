@@ -1,91 +1,89 @@
 #include "cub3d.h"
 #include "mlx/mlx.h"
 
-static void	aux_render_sprite(t_rayc *rayc, int i)
+static void	aux_render_sprite(t_vars *vars, int i)
 {
-	rayc->render.x = rayc->sprite[rayc->sprite[i].order].coord_x - rayc->posx;
-	rayc->render.y = rayc->sprite[rayc->sprite[i].order].coord_y - rayc->posy;
-	rayc->render.inv_det = 1 / (rayc->planex * rayc->diry - rayc->dirx * rayc->planey);
-	rayc->render.transform_x = rayc->render.inv_det * (rayc->diry * rayc->render.x - rayc->dirx * rayc->render.y);
-	rayc->render.transform_y = rayc->render.inv_det * (-rayc->planey * rayc->render.x + rayc->planex * rayc->render.y);
-	rayc->render.screen_x = (int)((rayc->width_screen / 2) * (1 + rayc->render.transform_x / rayc->render.transform_y));
-	rayc->render.height = abs((int)(rayc->height_screen / rayc->render.transform_y));
-	rayc->render.start_y = -rayc->render.height / 2 + rayc->height_screen / 2;	
-	if (rayc->render.start_y < 0)
-		rayc->render.start_y = 0;
-	rayc->render.end_y = rayc->render.height / 2 + rayc->height_screen / 2;
-	if (rayc->render.end_y >= rayc->height_screen)
-		rayc->render.end_y = rayc->height_screen - 1;
-	rayc->render.width = abs((int)(rayc->height_screen / rayc->render.transform_y));
-	rayc->render.start_x = -rayc->render.width / 2 + rayc->render.screen_x;
-	if (rayc->render.start_x < 0)
-		rayc->render.start_x = 0;
-	rayc->render.end_x = rayc->render.width / 2 + rayc->render.screen_x;
-	if (rayc->render.end_x >= rayc->width_screen)
-		rayc->render.end_x = rayc->width_screen - 1;
+	vars->rc.render.x = vars->rc.sprite[vars->rc.sprite[i].order].coord_x - vars->rc.posx;
+	vars->rc.render.y = vars->rc.sprite[vars->rc.sprite[i].order].coord_y - vars->rc.posy;
+	vars->rc.render.inv_det = 1 / (vars->rc.planex * vars->rc.diry - vars->rc.dirx * vars->rc.planey);
+	vars->rc.render.transform_x = vars->rc.render.inv_det * (vars->rc.diry * vars->rc.render.x - vars->rc.dirx * vars->rc.render.y);
+	vars->rc.render.transform_y = vars->rc.render.inv_det * (-vars->rc.planey * vars->rc.render.x + vars->rc.planex * vars->rc.render.y);
+	vars->rc.render.screen_x = (int)((vars->screen_width / 2) * (1 + vars->rc.render.transform_x / vars->rc.render.transform_y));
+	vars->rc.render.height = abs((int)(vars->screen_height / vars->rc.render.transform_y));
+	vars->rc.render.start_y = -vars->rc.render.height / 2 + vars->screen_height / 2;	
+	if (vars->rc.render.start_y < 0)
+		vars->rc.render.start_y = 0;
+	vars->rc.render.end_y = vars->rc.render.height / 2 + vars->screen_height / 2;
+	if (vars->rc.render.end_y >= vars->screen_height)
+		vars->rc.render.end_y = vars->screen_height - 1;
+	vars->rc.render.width = abs((int)(vars->screen_height / vars->rc.render.transform_y));
+	vars->rc.render.start_x = -vars->rc.render.width / 2 + vars->rc.render.screen_x;
+	if (vars->rc.render.start_x < 0)
+		vars->rc.render.start_x = 0;
+	vars->rc.render.end_x = vars->rc.render.width / 2 + vars->rc.render.screen_x;
+	if (vars->rc.render.end_x >= vars->screen_width)
+		vars->rc.render.end_x = vars->screen_width - 1;
 }
 
-static void	render_sprite(t_rayc *rayc, t_data *data, t_vars *vars)
+static void	render_sprite(t_vars *vars)
 {
 	int	i;
 	int	x;
 
 	i = 0;
-    rayc->width_screen = ft_atoi(data->x);
-    rayc->height_screen = ft_atoi(data->y);
-	while (i < rayc->sprites)
+	while (i < vars->rc.sprites)
 	{
-		aux_render_sprite(rayc, i);
-		x = rayc->render.start_x;
-		while (x < rayc->render.end_x && x < rayc->width_screen)
+		aux_render_sprite(vars, i);
+		x = vars->rc.render.start_x;
+		while (x < vars->rc.render.end_x && x < vars->screen_width)
 		{
-			rayc->render.tex_x = (int)(256 * (x - (-rayc->render.width / 2 + rayc->render.screen_x)) * rayc->sprite[i].width / rayc->render.width) / 256;
-			if (rayc->render.transform_y > 0)
-				last_render_sprite(rayc, x, i, vars);
+			vars->rc.render.tex_x = (int)(256 * (x - (-vars->rc.render.width / 2 + vars->rc.render.screen_x)) * vars->rc.sprite[i].width / vars->rc.render.width) / 256;
+			if (vars->rc.render.transform_y > 0)
+				last_render_sprite(x, i, vars);
 			x++;
 		}
 		i++;
 	}
 }
 
-static void	sort_sprite(t_rayc *rayc)
+static void	sort_sprite(t_vars *vars)
 {
 	int	i;
 	int	swap;
 
 	i = 0;
-	while (i + 1 < rayc->sprites)
+	while (i + 1 < vars->rc.sprites)
 	{
-		if (rayc->sprite[rayc->sprite[i].order].distance < rayc->sprite[rayc->sprite[i + 1].order].distance)
+		if (vars->rc.sprite[vars->rc.sprite[i].order].distance < vars->rc.sprite[vars->rc.sprite[i + 1].order].distance)
 		{
-			swap = rayc->sprite[i].order;
-			rayc->sprite[i].order = rayc->sprite[i + 1].order;
-			rayc->sprite[i + 1].order = swap;
-			sort_sprite(rayc);
+			swap = vars->rc.sprite[i].order;
+			vars->rc.sprite[i].order = vars->rc.sprite[i + 1].order;
+			vars->rc.sprite[i + 1].order = swap;
+			sort_sprite(vars);
 		}
 		i++;
 	}
 }
 
-static void	sprite_distance(t_rayc *rayc)
+static void	sprite_distance(t_vars *vars)
 {
 	int	i;
 
 	i = 0;
-	while (i < rayc->sprites)
+	while (i < vars->rc.sprites)
 	{
-		rayc->sprite[i].order = i;
-		rayc->sprite[rayc->sprite[i].order].distance = \
-        pow(rayc->posx - rayc->sprite[rayc->sprite[i].order].coord_x, 2) + \
-        pow(rayc->posy - rayc->sprite[rayc->sprite[i].order].coord_y, 2);
+		vars->rc.sprite[i].order = i;
+		vars->rc.sprite[vars->rc.sprite[i].order].distance = \
+        pow(vars->rc.posx - vars->rc.sprite[vars->rc.sprite[i].order].coord_x, 2) + \
+        pow(vars->rc.posy - vars->rc.sprite[vars->rc.sprite[i].order].coord_y, 2);
 		i++;
 	}
 }
 
-void	ray_sprite(t_rayc *rayc, t_data *data, t_vars *vars)
+void	ray_sprite(t_vars *vars)
 {
-	sprite_distance(rayc);
-	sort_sprite(rayc);
-	render_sprite(rayc, data, vars);
-	free_sprite(rayc);
+	sprite_distance(vars);
+	sort_sprite(vars);
+	render_sprite(vars);
+	free_sprite(vars);
 }

@@ -6,65 +6,69 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 12:34:05 by dsantama          #+#    #+#             */
-/*   Updated: 2021/02/05 09:08:25 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/02/05 13:24:00 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-#include "mlx/mlx.h"
 
-static void		posmap(int x, int y, t_parse *parse, t_rayc *rayc)
+static t_vars		*posmap(int x, int y, t_parse *parse, t_vars *vars)
 {
 	int n;
 
 	n = 0;
-	rayc->sprites = 0;
+	vars->rc.sprites = 0;
 	while (parse->map[n] != '\0')
 	{
 		if (parse->map[n] == '\n')
 		{
-			if (x > rayc->mapwidth)
-				rayc->mapwidth = x;
+			if (x > vars->rc.mapwidth)
+				vars->rc.mapwidth = x;
 			y++;
 			x = 0;
 		}
 		if (parse->map[n] == '2')
 		{
-			rayc->sprites++;
+			vars->rc.sprites++;
 		}
 		if (parse->map[n] == 'N' || parse->map[n] == 'S' ||
 		parse->map[n] == 'E' || parse->map[n] == 'W')
 		{
-			rayc->direction = parse->map[n];
-			rayc->posy = (y + 1) + 0.5;
-			rayc->posx = x + 0.5;
+			vars->rc.direction = parse->map[n];
+			vars->rc.posy = (y + 1) + 0.5;
+			vars->rc.posx = x + 0.5;
 		}
 		n++;
 		x++;
 	}
-	rayc->mapheight = y + 1;
+	vars->rc.mapheight = y + 1;
+	return (vars);
 }
 
-static void		mapsquare(int x, t_parse *parse,
-t_rayc *rayc, int worldmap[rayc->mapwidth][rayc->mapheight])
+static t_vars		*mapsquare(int x, t_parse *parse,
+t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight])
 {
 	int n;
 	int y;
 
 	y = 0;
 	n = 0;
-	while (y < rayc->mapheight)
+	while (y < vars->rc.mapheight)
 	{
-		while (x < rayc->mapwidth)
+		while (x < vars->rc.mapwidth)
 		{
 			if (parse->map[n] == '\n' || parse->map[n] == '\0')
 			{
-				while (x < rayc->mapwidth)
+				while (x < vars->rc.mapwidth)
 				{
-					worldmap[x][y] = ' ';
+					worldmap[x][y] = '0';
 					x++;
 				}
 				x--;
+			}
+			if (parse->map[n] == ' ')
+			{
+				parse->map[n] = '0';
 			}
 			worldmap[x][y] = parse->map[n];
 			n++;
@@ -73,41 +77,39 @@ t_rayc *rayc, int worldmap[rayc->mapwidth][rayc->mapheight])
 		x = 0;
 		y++;
 	}
+	return (vars);
 }
 
-int				worldmap(t_colors *colors, t_rayc *rayc, t_parse *parse, t_data *data)
+t_vars				*worldmap(t_colors *colors, t_vars *vars, t_parse *parse, t_data *data)
 {
-	int			worldmap[rayc->mapwidth][rayc->mapheight];
-	t_vars		*vars;
+	int			worldmap[vars->rc.mapwidth][vars->rc.mapheight];
 	int			x;
 	
 	x = 0;
-	vars = ((t_vars *)malloc(sizeof(t_vars)));
-	if (!vars)
-		return (0);
-	rayc->color_floor = ((ft_atoi(colors->r_f) << 16) + (ft_atoi(colors->g_f) << 8) + \
+	vars->rc.color_floor = ((ft_atoi(colors->r_f) << 16) + (ft_atoi(colors->g_f) << 8) + \
 	(ft_atoi(colors->b_f)));
-	rayc->color_roof = ((ft_atoi(colors->r_c) << 16) + (ft_atoi(colors->g_c) << 8) + \
+	vars->rc.color_roof = ((ft_atoi(colors->r_c) << 16) + (ft_atoi(colors->g_c) << 8) + \
 	(ft_atoi(colors->b_c)));
-	mapsquare(x, parse, rayc, worldmap);
-	orientation(rayc);
-	inwindow(rayc, vars, data, worldmap);
-	return (0);
+	vars = mapsquare(x, parse, vars, worldmap);
+	vars = orientation(vars);
+	vars = tresolution(vars, data);
+	inwindow(vars, data, worldmap);
+	return (vars);
 }
 
 int				initialize(t_colors *colors, t_parse *parse, t_data *data)
 {
-	t_rayc	*rayc;
-	int		y;
-	int		x;
+	t_vars		*vars;
+	int			y;
+	int			x;
 
 	y = 0;
 	x = 0;
-	rayc = ((t_rayc *)malloc(sizeof(t_rayc)));
-	if (!rayc)
+	vars = ((t_vars *)malloc(sizeof(t_vars)));
+	if (!vars)
 		return (0);
-	rayc->mapwidth = 0;
-	posmap(x, y, parse, rayc);
-	worldmap(colors, rayc, parse, data);
+	vars->rc.mapwidth = 0;
+	vars = posmap(x, y, parse, vars);
+	vars = worldmap(colors, vars, parse, data);
 	return (0);
 }

@@ -6,36 +6,42 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 13:23:05 by dsantama          #+#    #+#             */
-/*   Updated: 2021/01/28 13:46:38 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/02/05 12:51:54 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include "mlx/mlx.h"
 
-t_rayc *orientation(t_rayc *rayc)
+t_vars *orientation(t_vars *vars)
 {
-	if (rayc->direction == 'N')
+	if (vars->rc.direction == 'N')
 	{
-		rayc->dirx = 0;
-		rayc->diry = -1;
+		vars->rc.dirx = 0;
+		vars->rc.diry = -1;
 	}
-	if (rayc->direction == 'S')
+	if (vars->rc.direction == 'S')
 	{
-		rayc->dirx = 0;
-		rayc->diry = 1;
+		vars->rc.dirx = 0;
+		vars->rc.diry = 1;
 	}
-	if (rayc->direction == 'W')
+	if (vars->rc.direction == 'W')
 	{
-		rayc->dirx = -1;
-		rayc->diry = 0;
+		vars->rc.dirx = -1;
+		vars->rc.diry = 0;
 	}
-	if (rayc->direction == 'E')
+	if (vars->rc.direction == 'E')
 	{
-		rayc->dirx = 1;
-		rayc->diry = 0;
+		vars->rc.dirx = 1;
+		vars->rc.diry = 0;
 	}
-	rayc->planex = -0.66 * rayc->diry;
-	rayc->planey = 0.66 * rayc->dirx;
-	return (rayc);
+	vars->rc.planex = -0.66 * vars->rc.diry;
+	vars->rc.planey = 0.66 * vars->rc.dirx;
+	return (vars);
+}
+t_vars *tresolution(t_vars *vars, t_data *data)
+{
+	vars->screen_height = data->swapy;
+	vars->screen_width = data->swapx;
+	return (vars);
 }
