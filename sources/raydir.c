@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 09:30:17 by dsantama          #+#    #+#             */
-/*   Updated: 2021/01/28 13:16:05 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/02/05 08:39:57 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,7 @@ int worldmap[rayc->mapwidth][rayc->mapheight], t_vars *vars)
 		rayc->perpwalldist = (rayc->mapy - rayc->posy + (1 - rayc->stepy) / 2) / rayc->raydiry;		
 }
 
-static void			raycast(t_rayc *rayc, int worldmap[rayc->mapwidth][rayc->mapheight],
-int x, int width)
+static void			raycast(t_rayc *rayc, int x, int width)
 {
 	rayc->camerax = 2 * x / (double)width - 1;
 	rayc->raydirx = rayc->dirx + rayc->planex * rayc->camerax;
@@ -83,12 +82,12 @@ int x)
 
 	rayc->lineheight = (height / rayc->perpwalldist);
 	rayc->drawstart = -rayc->lineheight / 2 + height / 2;
-	rayc->drawend = rayc->lineheight / 2 + height / 2
+	rayc->drawend = rayc->lineheight / 2 + height / 2;
 	if (rayc->drawstart < 0)
 		rayc->drawstart = 0;
 	if (rayc->drawend >= height)
 		rayc->drawend = height - 1;
-	set_texture(rayc, x, height);
+	set_texture(rayc, x, height, vars);
 	y = 0;
 	if (rayc->drawend < 0)
 		rayc->drawend = height;
@@ -115,7 +114,7 @@ int worldmap[rayc->mapwidth][rayc->mapheight])
 	height = ft_atoi(data->y);
 	while (x < width)
 	{
-		raycast(rayc, worldmap, x, width);
+		raycast(rayc, x, width);
 		cal_step(rayc, vars);
 		dda(rayc, worldmap, vars);
 		rayprint(rayc, height, vars, x);

@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 12:34:05 by dsantama          #+#    #+#             */
-/*   Updated: 2021/01/27 13:13:10 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/02/05 09:08:25 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,13 @@ int				worldmap(t_colors *colors, t_rayc *rayc, t_parse *parse, t_data *data)
 	int			x;
 	
 	x = 0;
-	rayc->color_floor = (ft_atoi(colors->r_f) << 16) + (ft_atoi(colors->g_f) << 8) + \
-	(ft_atoi(colors->b_f);
-	rayc->color_roof = (ft_atoi(colors->r_c) << 16) + (ft_atoi(colors->g_c) << 8) + \
-	(ft_atoi(colors->b_c);
+	vars = ((t_vars *)malloc(sizeof(t_vars)));
+	if (!vars)
+		return (0);
+	rayc->color_floor = ((ft_atoi(colors->r_f) << 16) + (ft_atoi(colors->g_f) << 8) + \
+	(ft_atoi(colors->b_f)));
+	rayc->color_roof = ((ft_atoi(colors->r_c) << 16) + (ft_atoi(colors->g_c) << 8) + \
+	(ft_atoi(colors->b_c)));
 	mapsquare(x, parse, rayc, worldmap);
 	orientation(rayc);
 	inwindow(rayc, vars, data, worldmap);

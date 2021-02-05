@@ -1,7 +1,7 @@
 #include "cub3d.h"
 #include "mlx/mlx.h"
 
-static void	aux_render_sprite(t_rayc *rayc, int i, t_data *data)
+static void	aux_render_sprite(t_rayc *rayc, int i)
 {
 	rayc->render.x = rayc->sprite[rayc->sprite[i].order].coord_x - rayc->posx;
 	rayc->render.y = rayc->sprite[rayc->sprite[i].order].coord_y - rayc->posy;
@@ -35,7 +35,7 @@ static void	render_sprite(t_rayc *rayc, t_data *data, t_vars *vars)
     rayc->height_screen = ft_atoi(data->y);
 	while (i < rayc->sprites)
 	{
-		aux_render_sprite(rayc, i, data);
+		aux_render_sprite(rayc, i);
 		x = rayc->render.start_x;
 		while (x < rayc->render.end_x && x < rayc->width_screen)
 		{

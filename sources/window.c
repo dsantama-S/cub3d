@@ -49,22 +49,12 @@ int worldmap[rayc->mapwidth][rayc->mapheight])
 int     inwindow(t_rayc *rayc, t_vars *vars, t_data *data,
 int worldmap[rayc->mapwidth][rayc->mapheight])
 {
-    if (!(vars->mlx = mlx_init()))
-	{
-		free(env);
-		exit(0);
-	    return (0);
-    }
-    if (!(vars->win) = mlx_new_window(vars->mlx, ft_atoi(data->x),
+	vars->mlx = mlx_init();
+	vars->win = mlx_new_window(vars->mlx, ft_atoi(data->x),
 	ft_atoi(data->y), "Cub3d");
-    {
-        free(vars->mlx);
-        free(vars);
-        exit(0);
-        return(0);
-    }
     rayc = init_textures(rayc, data, vars);
     rayc = set_sprites(rayc, worldmap);
     rayc = init_frame(rayc, vars, data, worldmap);
     mlx_loop(vars->mlx);
+	return 0;
 }

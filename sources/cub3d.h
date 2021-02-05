@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 09:14:24 by dsantama          #+#    #+#             */
-/*   Updated: 2021/01/28 13:05:18 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/02/05 08:49:57 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <stdarg.h>
+# include <math.h>
 
 typedef struct		s_data
 {
@@ -170,10 +171,10 @@ typedef struct		s_parse
 	char			*map;
 }					t_parse;
 
-void				free_sprite(t_rayc *rayc)
+void				free_sprite(t_rayc *rayc);
 void				last_render_sprite(t_rayc *rayc, int x, int i, t_vars *vars);
 void				ray_sprite(t_rayc *rayc, t_data *data, t_vars *vars);
-void				set_texture(t_env *env, int x);
+void				set_texture(t_rayc *rayc, int x, int height, t_vars *vars);
 void				rayprint(t_rayc *rayc, int height, t_vars *vars,
 int x);
 t_rayc				*init_frame(t_rayc *rayc, t_vars *vars, t_data *data,
@@ -189,7 +190,7 @@ void				error_map(t_parse *parse, t_data *data);
 int					worldmap(t_colors *colors, t_rayc *rayc, t_parse *parse,
 t_data *data);
 int					read_map_cub(char *path);
-void 				ray_starts(t_vars vars, t_rayc *rayc, t_data *data,
+void 				ray_starts(t_vars *vars, t_rayc *rayc, t_data *data,
 int worldmap[rayc->mapwidth][rayc->mapheight]);
 int					initialize(t_colors *colors, t_parse *parse, t_data *data);
 int					start(t_data *data, t_rayc *rayc);

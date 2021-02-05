@@ -15,7 +15,7 @@ static t_texture	put_texture(char *root_texture, t_vars *vars)
 {
     t_texture	texture;
 
-	if (!(texture.img_ptr = mlx_xpm_file_to_image(vars->mlx, root_texture, &texture.width, &texture.height)))
+	if (!(texture.img_ptr = mlx_xpm_file_to_image(vars->mlx, root_texture, &texture.width, &texture.heigh)))
 		printf("Something wrong in texture\n");
 	if (!(texture.get_data = (int *)mlx_get_data_addr(texture.img_ptr, &texture.bits_per_pixel, &texture.size_line, &texture.endian)))
 		printf("Something wrong in texture\n");
@@ -56,7 +56,7 @@ void	set_texture(t_rayc *rayc, int x, int height, t_vars *vars)
 	int			y;
 	t_texture	tex_wall;
 
-	tex_wall = texture_wall(env);
+	tex_wall = texture_wall(rayc);
 	if (rayc->side == 0)
 		wall_x = rayc->posy + rayc->perpwalldist * rayc->raydiry;
 	else
@@ -66,7 +66,7 @@ void	set_texture(t_rayc *rayc, int x, int height, t_vars *vars)
 	y = rayc->drawstart;
 	while (y++ < rayc->drawend)
 	{
-		tex_y = (y - height / 2 + rayc->lineheight / 2) * tex_wall.height / rayc->lineheight;
+		tex_y = (y - height / 2 + rayc->lineheight / 2) * tex_wall.heigh / rayc->lineheight;
 		if (tex_y < 0)
 			return ;
 		vars->get_data[x + y * (vars->line_length / 4)] = tex_wall.get_data[tex_x + tex_y * tex_wall.width];
