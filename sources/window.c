@@ -9,7 +9,6 @@ static t_vars	*set_sprites(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->r
 
 	y = 0;
 	i = 0;
-	vars->rc.sprite = malloc(vars->rc.sprites + 1);
 	while (y < vars->rc.mapheight)
 	{
 		x = 0;

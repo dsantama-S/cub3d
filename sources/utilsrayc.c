@@ -45,3 +45,10 @@ t_vars *tresolution(t_vars *vars, t_data *data)
 	vars->screen_width = data->swapx;
 	return (vars);
 }
+
+void	init_values(t_vars *vars)
+{
+	vars->mlx = NULL;
+	vars->win = NULL;
+	vars->rc.sprite = NULL;
+}

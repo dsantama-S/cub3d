@@ -93,6 +93,7 @@ t_vars				*worldmap(t_colors *colors, t_vars *vars, t_parse *parse, t_data *data
 	vars = mapsquare(x, parse, vars, worldmap);
 	vars = orientation(vars);
 	vars = tresolution(vars, data);
+	init_values(vars);
 	inwindow(vars, data, worldmap);
 	return (vars);
 }

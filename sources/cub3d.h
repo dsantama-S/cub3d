@@ -193,6 +193,7 @@ void				error_colors(t_colors *colors, t_data *data);
 void				error_map(t_parse *parse, t_data *data);
 t_vars				*worldmap(t_colors *colors, t_vars *vars, t_parse *parse,
 t_data *data);
+void				init_values(t_vars *vars);
 int					read_map_cub(char *path);
 void 				ray_starts(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight]);
 int					initialize(t_colors *colors, t_parse *parse, t_data *data);
