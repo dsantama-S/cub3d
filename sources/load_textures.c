@@ -30,7 +30,7 @@ static t_texture	texture_wall(t_vars *vars)
 		return (vars->rc.north);
 }
 
-t_vars *init_textures(t_data *data, t_vars *vars)
+void	init_textures(t_data *data, t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight])
 {
     int i;
 
@@ -42,7 +42,7 @@ t_vars *init_textures(t_data *data, t_vars *vars)
     i = -1;
     while (++i < vars->rc.sprites)
         vars = put_sprite("../textures/barril.xpm", i, vars);
-    return (vars);
+    set_sprites(vars, worldmap);
 }
 
 void	set_texture(int x, int height, t_vars *vars)

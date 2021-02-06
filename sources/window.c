@@ -1,7 +1,7 @@
 #include "cub3d.h"
 #include "mlx/mlx.h"
 
-static t_vars	*set_sprites(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight])
+void	*set_sprites(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight])
 {
 	int	x;
 	int	y;
@@ -24,10 +24,9 @@ static t_vars	*set_sprites(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->r
 		}
 		y++;
 	}
-	return (vars);
 }
 
-t_vars	*init_frame(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight])
+void	init_frame(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight])
 {
 	vars->new_image = mlx_new_image(vars->mlx, vars->screen_width, vars->screen_height);
 	vars->get_data = (int *)mlx_get_data_addr(vars->new_image, &vars->bits_per_pixel,
@@ -42,7 +41,6 @@ t_vars	*init_frame(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.maphei
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->new_image, 0, 0);
 	mlx_do_sync(vars->mlx);
 	mlx_destroy_image(vars->mlx, vars->new_image);
-	return (vars);
 }
 
 int     inwindow(t_vars *vars, t_data *data,
@@ -52,9 +50,8 @@ int worldmap[vars->rc.mapwidth][vars->rc.mapheight])
 	if (worldmap){}
 	vars->mlx = mlx_init();
 	vars->win = mlx_new_window(vars->mlx, vars->screen_width, vars->screen_height, "Cub3d");
-    //vars = init_textures(data, vars);
-    vars = set_sprites(vars, worldmap);
-    //vars = init_frame(vars, worldmap);
+    init_textures(data, vars);
+    init_frame(vars, worldmap);
     mlx_loop(vars->mlx);
 	return (0);
 }

@@ -182,8 +182,9 @@ void				ray_sprite(t_vars *vars);
 t_vars 				*tresolution(t_vars *vars, t_data *data);
 void				set_texture(int x, int height, t_vars *vars);
 void				rayprint(int height, t_vars *vars, int x);
-t_vars				*init_frame(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight]);
-t_vars				*init_textures(t_data *data, t_vars *vars);
+void				init_frame(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight]);
+void				init_textures(t_data *data, t_vars *vars,
+int worldmap[vars->rc.mapwidth][vars->rc.mapheight]);
 t_vars				*orientation(t_vars *vars);
 int					inwindow(t_vars *vars, t_data *data,
 int worldmap[vars->rc.mapwidth][vars->rc.mapheight]);
@@ -196,6 +197,7 @@ t_data *data);
 void				init_values(t_vars *vars);
 int					read_map_cub(char *path);
 void 				ray_starts(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight]);
+void				set_sprites(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight]);
 int					initialize(t_colors *colors, t_parse *parse, t_data *data);
 int					start(t_data *data, t_rayc *rayc);
 #endif
