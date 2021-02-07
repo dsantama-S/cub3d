@@ -1,7 +1,7 @@
 #include "cub3d.h"
 #include "mlx/mlx.h"
 
-void	*set_sprites(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight])
+void	set_sprites(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight])
 {
 	int	x;
 	int	y;
@@ -50,8 +50,8 @@ int worldmap[vars->rc.mapwidth][vars->rc.mapheight])
 	if (worldmap){}
 	vars->mlx = mlx_init();
 	vars->win = mlx_new_window(vars->mlx, vars->screen_width, vars->screen_height, "Cub3d");
-    init_textures(data, vars);
-    init_frame(vars, worldmap);
+    init_textures(data, vars, worldmap);
+    //init_frame(vars, worldmap);
     mlx_loop(vars->mlx);
 	return (0);
 }
