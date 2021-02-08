@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 12:34:05 by dsantama          #+#    #+#             */
-/*   Updated: 2021/02/05 13:24:00 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/02/08 11:49:43 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,8 @@ t_vars				*worldmap(t_colors *colors, t_vars *vars, t_parse *parse, t_data *data
 	vars = mapsquare(x, parse, vars, worldmap);
 	vars = orientation(vars);
 	vars = tresolution(vars, data);
-	init_values(vars);
-	inwindow(vars, data, worldmap);
+	init_values(vars, data);
+	inwindow(vars, worldmap);
 	return (vars);
 }
 

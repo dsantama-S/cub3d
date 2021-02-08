@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raykeys.c                                          :+:      :+:    :+:   */
+/*   utilsrayc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 13:23:05 by dsantama          #+#    #+#             */
-/*   Updated: 2021/02/05 12:51:54 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/02/08 12:37:54 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,17 @@ t_vars *tresolution(t_vars *vars, t_data *data)
 	return (vars);
 }
 
-void	init_values(t_vars *vars)
+void	init_values(t_vars *vars, t_data *data)
 {
+	vars->rc.texture_no = data->texture_no;
+	vars->rc.texture_so = data->texture_so;
+	vars->rc.texture_we = data->texture_we;
+	vars->rc.texture_ea = data->texture_ea;
+	vars->rc.texture_sprite = data->texture_sprite;
 	vars->mlx = NULL;
 	vars->win = NULL;
-	vars->rc.sprite = NULL;
+	if (!(vars->rc.sprite = malloc(sizeof(int) * vars->rc.sprites)))
+	{
+		exit(0);
+	};
 }

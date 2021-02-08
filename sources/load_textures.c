@@ -30,18 +30,17 @@ static t_texture	texture_wall(t_vars *vars)
 		return (vars->rc.north);
 }
 
-void	init_textures(t_data *data, t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight])
+void	init_textures(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight])
 {
     int i;
 
-	if (data){}
-    vars->rc.north = put_texture("../textures/eagle.xpm", vars);
-    vars->rc.south = put_texture("../textures/purplestone.xpm", vars);
-    vars->rc.east = put_texture("../textures/bluestone.xpm", vars);
-    vars->rc.west = put_texture("../textures/wood.xpm", vars);
+    vars->rc.north = put_texture(vars->rc.texture_no, vars);
+    vars->rc.south = put_texture(vars->rc.texture_so, vars);
+    vars->rc.east = put_texture(vars->rc.texture_ea, vars);
+    vars->rc.west = put_texture(vars->rc.texture_we, vars);
     i = -1;
     while (++i < vars->rc.sprites)
-        vars = put_sprite("../textures/barril.xpm", i, vars);
+        vars = put_sprite(vars->rc.texture_sprite, i, vars);
     set_sprites(vars, worldmap);
 }
 

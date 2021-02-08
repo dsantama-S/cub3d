@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 09:14:24 by dsantama          #+#    #+#             */
-/*   Updated: 2021/02/05 13:14:50 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/02/08 11:48:33 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,11 @@ typedef struct		s_rayc
 	int				lineheight;
 	int				drawstart;
 	int				drawend;
+	char			*texture_so;
+	char			*texture_no;
+	char			*texture_we;
+	char			*texture_ea;
+	char			*texture_sprite;
 	double			*dist_wall;
 	double			perpwalldist;
 	double			sidedistx;
@@ -183,18 +188,16 @@ t_vars 				*tresolution(t_vars *vars, t_data *data);
 void				set_texture(int x, int height, t_vars *vars);
 void				rayprint(int height, t_vars *vars, int x);
 void				init_frame(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight]);
-void				init_textures(t_data *data, t_vars *vars,
-int worldmap[vars->rc.mapwidth][vars->rc.mapheight]);
+void				init_textures(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight]);
 t_vars				*orientation(t_vars *vars);
-int					inwindow(t_vars *vars, t_data *data,
-int worldmap[vars->rc.mapwidth][vars->rc.mapheight]);
+int					inwindow(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight]);
 int					get_next_line(int fd, char **line);
 int					analyze_map(t_data *data, t_parse *parse);
 void				error_colors(t_colors *colors, t_data *data);
 void				error_map(t_parse *parse, t_data *data);
 t_vars				*worldmap(t_colors *colors, t_vars *vars, t_parse *parse,
 t_data *data);
-void				init_values(t_vars *vars);
+void				init_values(t_vars *vars, t_data *data);
 int					read_map_cub(char *path);
 void 				ray_starts(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight]);
 void				set_sprites(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight]);

@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/29 12:48:21 by dsantama          #+#    #+#             */
-/*   Updated: 2021/01/25 12:49:32 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/02/08 11:39:01 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ char				*ft_strnchr(const char *s, int c, int n);
 char				*ft_strtrim(char const *s1, char const *set);
 char				*ft_strjoin(char const *s1, char const *s2);
 char				*ft_strncpy(char *dest, char *src, unsigned int n);
+char				*ft_strcat(char *dest, char *src);
 size_t				ft_strlcat(char *dest, const char *src, size_t size);
 size_t				ft_strlcpy(char *dest, const char *src, size_t n);
 size_t				ft_strlen(const char *str);
