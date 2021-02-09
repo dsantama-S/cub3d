@@ -33,10 +33,10 @@ void	init_frame(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight
     &vars->size_line, &vars->endian);
 	vars->rc.dist_wall = ft_calloc(sizeof(double), vars->screen_width);
 	ray_starts(vars, worldmap);
-	//ray_sprite(vars);
-	//mlx_put_image_to_window(vars->mlx, vars->win, vars->new_image, 0, 0);
-	//mlx_do_sync(vars->mlx);
-	//mlx_destroy_image(vars->mlx, vars->new_image);
+	ray_sprite(vars);
+	mlx_put_image_to_window(vars->mlx, vars->win, vars->new_image, 0, 0);
+	mlx_do_sync(vars->mlx);
+	mlx_destroy_image(vars->mlx, vars->new_image);
 }
 
 int     inwindow(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight])
