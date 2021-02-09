@@ -11,10 +11,20 @@ static t_vars	*put_sprite(char *root_sprite, int i, t_vars *vars)
 }
 static t_texture	put_texture(char *root_texture, t_vars *vars)
 {
-    t_texture	texture;
-	
-	texture.img_ptr = mlx_xpm_file_to_image(vars->mlx, root_texture, &texture.width, &texture.height);
-	texture.get_data = (int *)mlx_get_data_addr(texture.img_ptr, &texture.bits_per_pixel, &texture.size_line, &texture.endian);
+   t_texture	texture;
+
+	if (!(texture.img_ptr = mlx_xpm_file_to_image(vars->mlx, root_texture, \
+	&texture.width, &texture.height)))
+	{
+		write(1, "Error\nSomething wrong in wall texture", 37)
+		exit(0);;
+	}	
+	if (!(texture.get_data = (int *)mlx_get_data_addr(texture.img_ptr, \
+	&texture.bits_per_pixel, &texture.size_line, &texture.endian)))
+	{
+		write(1, "Error\nSomething wrong in wall texture", 37);
+		exit(0);
+	}
 	return (texture);
 }
 
@@ -34,8 +44,8 @@ void	init_textures(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.maphei
 {
     int i;
 
-    vars->rc.north = put_texture(vars->rc.texture_so, vars);
-    vars->rc.south = put_texture(vars->rc.texture_no, vars);
+    vars->rc.north = put_texture(vars->rc.texture_no, vars);
+    vars->rc.south = put_texture(vars->rc.texture_so, vars);
     vars->rc.east = put_texture(vars->rc.texture_ea, vars);
     vars->rc.west = put_texture(vars->rc.texture_we, vars);
     i = -1;

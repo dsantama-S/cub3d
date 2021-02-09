@@ -16,7 +16,7 @@
 static void		cal_step(t_vars *vars)
 {
 	vars->rc.hit = 0;
-	if (vars->rc.raydirx < vars->endian)
+	if (vars->rc.raydirx < 0)
 	{
 		vars->rc.stepx = -1;
 		vars->rc.sidedistx = (vars->rc.posx - vars->rc.mapx) * vars->rc.deltadistx;
@@ -26,7 +26,7 @@ static void		cal_step(t_vars *vars)
 		vars->rc.stepx = 1;
 		vars->rc.sidedistx = (vars->rc.mapx + 1.0 - vars->rc.posx);
 	}
-	if (vars->rc.raydiry < vars->endian)
+	if (vars->rc.raydiry < 0)
 	{
 		vars->rc.stepy = -1;
 		vars->rc.sidedisty = (vars->rc.posy - vars->rc.mapy) * vars->rc.deltadisty;
@@ -57,7 +57,7 @@ static void		dda(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheigh
 		if (worldmap[vars->rc.mapx][vars->rc.mapy] == '1')
 			vars->rc.hit = 1;
 	}
-	if (vars->rc.side == vars->endian)
+	if (vars->rc.side == 0)
 		vars->rc.perpwalldist = (vars->rc.mapx - vars->rc.posx + (1 - vars->rc.stepx) / 2) / vars->rc.raydirx;
 	else
 		vars->rc.perpwalldist = (vars->rc.mapy - vars->rc.posy + (1 - vars->rc.stepy) / 2) / vars->rc.raydiry;		
@@ -77,7 +77,8 @@ static void			raycast(t_vars *vars, int x, int width)
 void			rayprint(int height, t_vars *vars, int x)
 {
 	int y;
-
+	
+	y = 0;
 	vars->rc.lineheight = (height / vars->rc.perpwalldist);
 	vars->rc.drawstart = -vars->rc.lineheight / 2 + height / 2;
 	vars->rc.drawend = vars->rc.lineheight / 2 + height / 2;
@@ -86,9 +87,6 @@ void			rayprint(int height, t_vars *vars, int x)
 	if (vars->rc.drawend >= height)
 		vars->rc.drawend = height - 1;
 	set_texture(x, height, vars);
-	y = 0;
-	if (vars->rc.drawend < 0)
-		vars->rc.drawend = height;
 	y = vars->rc.drawend;
 	while (y < height)
 	{
