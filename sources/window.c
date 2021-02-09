@@ -41,8 +41,19 @@ void	init_frame(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight
 
 int     inwindow(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight])
 {
-	vars->mlx = mlx_init();
-	vars->win = mlx_new_window(vars->mlx, vars->screen_width, vars->screen_height, "Cub3d");
+	if (!(vars->mlx = mlx_init()))
+	{
+		free(vars);
+		exit(0);
+		return (0);
+	}
+	if (!(vars->win = mlx_new_window(vars->mlx, vars->screen_width, vars->screen_height, "Cub3d")))
+	{
+		free(vars->mlx);
+		free(vars);
+		exit(0);
+		return (0);
+	}
 	init_textures(vars, worldmap);
     init_frame(vars, worldmap);
     mlx_loop(vars->mlx);

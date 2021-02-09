@@ -55,7 +55,7 @@ void	init_values(t_vars *vars, t_data *data)
 	vars->rc.texture_sprite = data->texture_sprite;
 	vars->mlx = NULL;
 	vars->win = NULL;
-	if (!(vars->rc.sprite = malloc(sizeof(int) * vars->rc.sprites)))
+	if (!(vars->rc.sprite = (t_sprite *)ft_calloc(sizeof(t_sprite), vars->rc.sprites)))
 	{
 		exit(0);
 	};
