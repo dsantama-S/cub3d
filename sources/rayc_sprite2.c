@@ -3,7 +3,7 @@
 
 void        free_sprite(t_vars *vars)
 {
-	if (!(vars->rc.render.dist_wall))
+	if (vars->rc.render.dist_wall)
 	{
 		free(vars->rc.render.dist_wall);
 		vars->rc.render.dist_wall = NULL;

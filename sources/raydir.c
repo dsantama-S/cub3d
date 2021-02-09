@@ -57,10 +57,6 @@ static void		dda(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheigh
 		if (worldmap[vars->rc.mapx][vars->rc.mapy] == '1')
 			vars->rc.hit = 1;
 	}
-	if (vars->rc.side == 0)
-		vars->rc.perpwalldist = (vars->rc.mapx - vars->rc.posx + (1 - vars->rc.stepx) / 2) / vars->rc.raydirx;
-	else
-		vars->rc.perpwalldist = (vars->rc.mapy - vars->rc.posy + (1 - vars->rc.stepy) / 2) / vars->rc.raydiry;		
 }
 
 static void			raycast(t_vars *vars, int x, int width)
@@ -112,6 +108,10 @@ void			ray_starts(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheig
 		raycast(vars, x, width);
 		cal_step(vars);
 		dda(vars, worldmap);
+		if (vars->rc.side == 0)
+			vars->rc.perpwalldist = (vars->rc.mapx - vars->rc.posx + (1 - vars->rc.stepx) / 2) / vars->rc.raydirx;
+		else
+			vars->rc.perpwalldist = (vars->rc.mapy - vars->rc.posy + (1 - vars->rc.stepy) / 2) / vars->rc.raydiry;
 		rayprint(height, vars, x);
 		vars->rc.dist_wall[x] = vars->rc.perpwalldist;
 		x++;
