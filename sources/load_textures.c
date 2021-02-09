@@ -68,13 +68,17 @@ void	set_texture(int x, int height, t_vars *vars)
 	else
 		wall_x = vars->rc.posx + vars->rc.perpwalldist * vars->rc.raydiry;
 	wall_x -= floor(wall_x);
-	tex_x = wall_x * (double)tex_wall.width;
+	tex_x = wall_x * (double)tex_wall->width;
+	if (vars->rc.side == 0 && vars->rc.raydirx > 0)
+		tex_x = tex_wall->width - tex_x - 1;
+	if (vars->rc.side == 1 && vars->rc.raydiry < 0)
+		tex_x = tex_wall->width - tex_x - 1;
 	y = vars->rc.drawstart;
 	while (y++ < vars->rc.drawend)
 	{
-		tex_y = (y - height / 2 + vars->rc.lineheight / 2) * tex_wall.height / vars->rc.lineheight;
+		tex_y = (y - height / 2 + vars->rc.lineheight / 2) * tex_wall->height / vars->rc.lineheight;
 		if (tex_y < 0)
 			return ;
-		vars->get_data[x + y * (vars->size_line / 4)] = tex_wall.get_data[tex_x + tex_y * tex_wall.width];
+		vars->get_data[x + y * (vars->size_line / 4)] = tex_wall->get_data[tex_x + tex_y * tex_wall->width];
 	}
 }
