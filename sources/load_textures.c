@@ -3,26 +3,34 @@
 
 static t_vars	*put_sprite(char *root_sprite, int i, t_vars *vars)
 {
-	vars->rc.sprite[i].img_ptr = mlx_xpm_file_to_image(vars->mlx, root_sprite,
-    &vars->rc.sprite[i].width, &vars->rc.sprite[i].height);
-	vars->rc.sprite[i].get_data = (int *)mlx_get_data_addr(vars->rc.sprite[i].img_ptr, &vars->rc.sprite[i].bits_per_pixel,
-    &vars->rc.sprite[i].size_line, &vars->rc.sprite[i].endian);
+	if (!(vars->rc.sprite[i].img_ptr = mlx_xpm_file_to_image(vars->mlx, root_sprite,
+    &vars->rc.sprite[i].width, &vars->rc.sprite[i].height)))
+	{
+		write(1, "Error\nSomething wrong with the sprite\n", 39);
+		exit(0);;
+	}	
+	if (!(vars->rc.sprite[i].get_data = (int *)mlx_get_data_addr(vars->rc.sprite[i].img_ptr, &vars->rc.sprite[i].bits_per_pixel,
+    &vars->rc.sprite[i].size_line, &vars->rc.sprite[i].endian)))
+	{
+		write(1, "Error\nSomething wrong with the sprite\n", 39);
+		exit(0);
+	}	
 	return (vars);
 }
 static t_texture	put_texture(char *root_texture, t_vars *vars)
 {
-   t_texture	texture;
+	t_texture	texture;
 
 	if (!(texture.img_ptr = mlx_xpm_file_to_image(vars->mlx, root_texture, \
 	&texture.width, &texture.height)))
 	{
-		write(1, "Error\nSomething wrong in wall texture", 37)
+		write(1, "Error\nSomething wrong in wall texture\n", 38);
 		exit(0);;
 	}	
 	if (!(texture.get_data = (int *)mlx_get_data_addr(texture.img_ptr, \
 	&texture.bits_per_pixel, &texture.size_line, &texture.endian)))
 	{
-		write(1, "Error\nSomething wrong in wall texture", 37);
+		write(1, "Error\nSomething wrong in wall texture\n", 38);
 		exit(0);
 	}
 	return (texture);
@@ -66,19 +74,15 @@ void	set_texture(int x, int height, t_vars *vars)
 	if (vars->rc.side == 0)
 		wall_x = vars->rc.posy + vars->rc.perpwalldist * vars->rc.raydiry;
 	else
-		wall_x = vars->rc.posx + vars->rc.perpwalldist * vars->rc.raydiry;
+		wall_x = vars->rc.posx + vars->rc.perpwalldist * vars->rc.raydirx;
 	wall_x -= floor(wall_x);
-	tex_x = wall_x * (double)tex_wall->width;
-	if (vars->rc.side == 0 && vars->rc.raydirx > 0)
-		tex_x = tex_wall->width - tex_x - 1;
-	if (vars->rc.side == 1 && vars->rc.raydiry < 0)
-		tex_x = tex_wall->width - tex_x - 1;
+	tex_x = wall_x * (double)tex_wall.width;
 	y = vars->rc.drawstart;
 	while (y++ < vars->rc.drawend)
 	{
-		tex_y = (y - height / 2 + vars->rc.lineheight / 2) * tex_wall->height / vars->rc.lineheight;
+		tex_y = (y - height / 2 + vars->rc.lineheight / 2) * tex_wall.height / vars->rc.lineheight;
 		if (tex_y < 0)
 			return ;
-		vars->get_data[x + y * (vars->size_line / 4)] = tex_wall->get_data[tex_x + tex_y * tex_wall->width];
+		vars->get_data[x + y * (vars->size_line / 4)] = tex_wall.get_data[tex_x + tex_y * tex_wall.width];
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 09:30:17 by dsantama          #+#    #+#             */
-/*   Updated: 2021/02/05 13:08:16 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/02/10 08:40:46 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ void			ray_starts(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheig
 		else
 			vars->rc.perpwalldist = (vars->rc.mapy - vars->rc.posy + (1 - vars->rc.stepy) / 2) / vars->rc.raydiry;
 		rayprint(height, vars, x);
-		vars->rc.dist_wall[x] = vars->rc.perpwalldist;
+		vars->rc.render.dist_wall[x] = vars->rc.perpwalldist;
 		x++;
 	}
 }

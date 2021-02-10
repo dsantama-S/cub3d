@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 09:14:24 by dsantama          #+#    #+#             */
-/*   Updated: 2021/02/08 11:48:33 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/02/10 10:48:40 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,9 +152,8 @@ typedef struct		s_rayc
 	double			raydiry;
 	double			planex;
 	double			planey;
-	double			time;
-	double			oldtime;
 	unsigned int	color;
+	unsigned int	colortex;
 }					t_rayc;
 
 typedef struct		s_vars
@@ -199,6 +198,7 @@ t_vars				*worldmap(t_colors *colors, t_vars *vars, t_parse *parse,
 t_data *data);
 void				init_values(t_vars *vars, t_data *data);
 int					read_map_cub(char *path);
+int					key_up(int keycode, t_vars *vars);
 void 				ray_starts(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight]);
 void				set_sprites(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight]);
 int					initialize(t_colors *colors, t_parse *parse, t_data *data);

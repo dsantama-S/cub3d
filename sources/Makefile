@@ -1,5 +1,9 @@
 LIB				= cub3d.h
-SRCS			= get_next_line.c cub3d.c analyze.c error.c initialize_ray.c raydir.c ray_sprite.c rayc_sprite2.c load_textures.c utilsrayc.c window.c main.c
+SRCS			= 	error.c initialize_ray.c keys.c \
+					get_next_line.c cub3d.c analyze.c \
+					raydir.c ray_sprite.c rayc_sprite2.c \
+					load_textures.c utilsrayc.c window.c main.c
+
 OBJS			= $(SRCS:.c=.o)
 RM				= rm -f
 CFLAGS			= -g -O3 -Wall -Wextra -Werror -I.

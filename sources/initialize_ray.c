@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 12:34:05 by dsantama          #+#    #+#             */
-/*   Updated: 2021/02/08 11:49:43 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/02/10 11:02:44 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ static t_vars		*posmap(int x, int y, t_parse *parse, t_vars *vars)
 		parse->map[n] == 'E' || parse->map[n] == 'W')
 		{
 			vars->rc.direction = parse->map[n];
-			vars->rc.posy = (y + 1) + 0.5;
-			vars->rc.posx = x + 0.5;
+			vars->rc.posy = y + 0.5;
+			vars->rc.posx = (x + 0.5) - 1;
 		}
 		n++;
 		x++;
