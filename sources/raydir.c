@@ -59,9 +59,9 @@ static void		dda(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheigh
 	}
 }
 
-static void			raycast(t_vars *vars, int x, int width)
+static void			raycast(t_vars *vars, int x)
 {
-	vars->rc.camerax = 2 * x / (double)width - 1;
+	vars->rc.camerax = 2 * x / (double)vars->screen_width - 1;
 	vars->rc.raydirx = vars->rc.dirx + vars->rc.planex * vars->rc.camerax;
 	vars->rc.raydiry = vars->rc.diry + vars->rc.planey * vars->rc.camerax;
 	vars->rc.mapx = (int)vars->rc.posx;
@@ -70,24 +70,21 @@ static void			raycast(t_vars *vars, int x, int width)
 	vars->rc.deltadisty = fabs(1 / vars->rc.raydiry);
 }
 
-void			rayprint(int height, t_vars *vars, int x)
+void			rayprint(int y, t_vars *vars, int x)
 {
-	int y;
-	
-	y = 0;
-	vars->rc.lineheight = (height / vars->rc.perpwalldist);
-	vars->rc.drawstart = -vars->rc.lineheight / 2 + height / 2;
-	vars->rc.drawend = vars->rc.lineheight / 2 + height / 2;
+	vars->rc.lineheight = (vars->screen_height / vars->rc.perpwalldist);
+	vars->rc.drawstart = -vars->rc.lineheight / 2 + vars->screen_height / 2;
+	vars->rc.drawend = vars->rc.lineheight / 2 + vars->screen_height / 2;
 	if (vars->rc.drawstart < 0)
 		vars->rc.drawstart = 0;
-	if (vars->rc.drawend >= height)
-		vars->rc.drawend = height - 1;
-	set_texture(x, height, vars);
+	if (vars->rc.drawend >= vars->screen_height)
+		vars->rc.drawend = vars->screen_height - 1;
+	set_texture(x, vars);
 	y = vars->rc.drawend;
-	while (y < height)
+	while (y < vars->screen_height)
 	{
 		vars->get_data[x + y * (vars->size_line / 4)] = vars->rc.color_floor;
-		vars->get_data[x + (height - y - 1) * (vars->size_line / 4)] = vars->rc.color_roof;
+		vars->get_data[x + (vars->screen_height - y - 1) * (vars->size_line / 4)] = vars->rc.color_roof;
 		y++;
 	}
 }
@@ -96,23 +93,19 @@ void			ray_starts(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheig
 {
 	int x;
 	int y;
-	int width;
-	int height;
 
 	x = 0;
 	y = 0;
-	width = vars->screen_width;
-	height = vars->screen_height;
-	while (x < width)
+	while (x < vars->screen_width)
 	{
-		raycast(vars, x, width);
+		raycast(vars, x);
 		cal_step(vars);
 		dda(vars, worldmap);
 		if (vars->rc.side == 0)
 			vars->rc.perpwalldist = (vars->rc.mapx - vars->rc.posx + (1 - vars->rc.stepx) / 2) / vars->rc.raydirx;
 		else
 			vars->rc.perpwalldist = (vars->rc.mapy - vars->rc.posy + (1 - vars->rc.stepy) / 2) / vars->rc.raydiry;
-		rayprint(height, vars, x);
+		rayprint(y, vars, x);
 		vars->rc.render.dist_wall[x] = vars->rc.perpwalldist;
 		x++;
 	}

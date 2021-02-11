@@ -36,18 +36,6 @@ static t_texture	put_texture(char *root_texture, t_vars *vars)
 	return (texture);
 }
 
-static t_texture	texture_wall(t_vars *vars)
-{
-	if (vars->rc.side == 0 && vars->rc.raydirx > 0)
-		return (vars->rc.east);
-	else if (vars->rc.side == 0 && vars->rc.raydirx < 0)
-		return (vars->rc.west);
-	else if (vars->rc.side == 1 && vars->rc.raydiry > 0)
-		return (vars->rc.south);
-	else
-		return (vars->rc.north);
-}
-
 void	init_textures(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight])
 {
     int i;
@@ -62,7 +50,19 @@ void	init_textures(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.maphei
     set_sprites(vars, worldmap);
 }
 
-void	set_texture(int x, int height, t_vars *vars)
+static t_texture	texture_wall(t_vars *vars)
+{
+	if (vars->rc.side == 0 && vars->rc.raydirx > 0)
+		return (vars->rc.east);
+	else if (vars->rc.side == 0 && vars->rc.raydirx < 0)
+		return (vars->rc.west);
+	else if (vars->rc.side == 1 && vars->rc.raydiry > 0)
+		return (vars->rc.south);
+	else
+		return (vars->rc.north);
+}
+
+void	set_texture(int x, t_vars *vars)
 {
 	double		wall_x;
 	int			tex_x;
@@ -80,7 +80,7 @@ void	set_texture(int x, int height, t_vars *vars)
 	y = vars->rc.drawstart;
 	while (y++ < vars->rc.drawend)
 	{
-		tex_y = (y - height / 2 + vars->rc.lineheight / 2) * tex_wall.height / vars->rc.lineheight;
+		tex_y = (y - vars->screen_height / 2 + vars->rc.lineheight / 2) * tex_wall.height / vars->rc.lineheight;
 		if (tex_y < 0)
 			return ;
 		vars->get_data[x + y * (vars->size_line / 4)] = tex_wall.get_data[tex_x + tex_y * tex_wall.width];
