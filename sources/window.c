@@ -16,7 +16,7 @@ void	set_sprites(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheigh
 		{
 			if (worldmap[x][y] == '2')
 			{
-				vars->rc.sprite[i].coord_x = x + 0.5;
+				vars->rc.sprite[i].coord_x = (x + 0.5) - 1;
 				vars->rc.sprite[i].coord_y = y + 0.5;
 				i++;
 			}

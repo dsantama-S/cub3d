@@ -39,10 +39,10 @@ static t_texture	put_texture(char *root_texture, t_vars *vars)
 void	init_textures(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight])
 {
     int i;
-
+	
+	vars->rc.east = put_texture(vars->rc.texture_ea, vars);
     vars->rc.north = put_texture(vars->rc.texture_no, vars);
     vars->rc.south = put_texture(vars->rc.texture_so, vars);
-    vars->rc.east = put_texture(vars->rc.texture_ea, vars);
     vars->rc.west = put_texture(vars->rc.texture_we, vars);
     i = -1;
     while (++i < vars->rc.sprites)
