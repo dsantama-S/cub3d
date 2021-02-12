@@ -62,7 +62,7 @@ int     inwindow(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheigh
 	mlx_hook(vars->win, 2, 1, &key_press, vars);
 	mlx_hook(vars->win, 3, 2, &key_release, vars);
 	mlx_hook(vars->win, 33, 0, &key_exit, vars);
-	//mlx_loop_hook(vars->mlx, &movement, vars);
+	mlx_loop_hook(vars->mlx, &movement, vars);
     mlx_loop(vars->mlx);
 	return (0);
 }

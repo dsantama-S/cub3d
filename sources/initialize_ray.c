@@ -80,7 +80,7 @@ t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight])
 	return (vars);
 }
 
-static void		printmap(t_vars *vars, int	worldmap[vars->rc.mapwidth][vars->rc.mapheight]);
+static void		printmap(t_vars *vars, int	worldmap[vars->rc.mapwidth][vars->rc.mapheight])
 {
 	int x;
 	int y;
@@ -91,7 +91,7 @@ static void		printmap(t_vars *vars, int	worldmap[vars->rc.mapwidth][vars->rc.map
     {
         while (x < vars->rc.mapwidth)
         {
-			printf("%c", vars->wmap[x + y * vars->rc.mapwidth]);
+			printf("%c", worldmap[x][y]);
             x++;
         }
         x = 0;
@@ -113,12 +113,11 @@ t_vars				*worldmap(t_colors *colors, t_vars *vars, t_parse *parse, t_data *data
 	vars->rc.color_roof = ((ft_atoi(colors->r_c) << 16) + (ft_atoi(colors->g_c) << 8) + \
 	(ft_atoi(colors->b_c)));
 	vars = mapsquare(x, parse, vars, worldmap);
-	vars->wmap = worldmap[vars->rc.mapwidth][vars->rc.mapheight];
 	printmap(vars, worldmap);
 	vars = orientation(vars);
 	vars = tresolution(vars, data);
 	init_values(vars, data);
-	//inwindow(vars, worldmap);
+	inwindow(vars, worldmap);
 	return (vars);
 }
 

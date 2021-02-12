@@ -13,14 +13,14 @@
 #include "cub3d.h"
 #include "mlx/mlx.h"
 
-int	movement(t_vars *vars,  int worldmap[vars->rc.mapwidth][vars->rc.mapheight])
+int	movement(t_vars *vars)
 {
 	vars->mv.speed_rot = 0.06;
-	move_up(vars, worldmap);
-	move_down(vars, worldmap);
-	move_right(vars, worldmap);
-	move_left(vars, worldmap);
-	init_frame(vars, worldmap);
+	move_up(vars);
+	move_down(vars);
+	move_right(vars);
+	move_left(vars);
+	init_frame(vars);
 	return (0);
 }
 
