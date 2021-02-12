@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   keys.c                                             :+:      :+:    :+:   */
+/*   keys1.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 09:44:53 by dsantama          #+#    #+#             */
-/*   Updated: 2021/02/10 10:52:30 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/02/12 02:12:31 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 int	movement(t_vars *vars,  int worldmap[vars->rc.mapwidth][vars->rc.mapheight])
 {
 	vars->mv.speed_rot = 0.06;
-	move_up(vars);
-	move_down(vars);
-	move_right(vars);
-	move_left(vars);
+	move_up(vars, worldmap);
+	move_down(vars, worldmap);
+	move_right(vars, worldmap);
+	move_left(vars, worldmap);
 	init_frame(vars, worldmap);
 	return (0);
 }

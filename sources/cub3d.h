@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 09:14:24 by dsantama          #+#    #+#             */
-/*   Updated: 2021/02/10 10:48:40 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/02/12 02:11:52 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,7 @@ typedef struct		s_rayc
 typedef struct		s_vars
 {
 	t_rayc			rc;
-	t_movement		mov;
+	t_movement		mv;
 	void			*mlx;
 	void			*win;
 	int				screen_width;
@@ -214,12 +214,12 @@ int					movement(t_vars *vars,  int worldmap[vars->rc.mapwidth][vars->rc.mapheig
 void				init_values(t_vars *vars, t_data *data);
 int					read_map_cub(char *path);
 int					key_press(int keycode, t_vars *vars);
-int					key_release(int keycode, t_vars *vars)
+int					key_release(int keycode, t_vars *vars);
 int					key_exit(t_vars *vars);
 void				move_left(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight]);
-void				move_right(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight])
-void				move_down(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight])
-void				move_up(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight])
+void				move_right(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight]);
+void				move_down(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight]);
+void				move_up(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight]);
 void 				ray_starts(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight]);
 void				set_sprites(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight]);
 int					initialize(t_colors *colors, t_parse *parse, t_data *data);
