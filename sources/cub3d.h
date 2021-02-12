@@ -169,10 +169,18 @@ typedef struct		s_rayc
 	unsigned int	colortex;
 }					t_rayc;
 
+typedef struct		s_map
+{
+	char			**map;
+	int				w_map;
+	int				h_map;
+}					t_map;
+
 typedef struct		s_vars
 {
 	t_rayc			rc;
 	t_movement		mv;
+	t_map			map;
 	void			*mlx;
 	void			*win;
 	int				screen_width;
