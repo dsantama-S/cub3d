@@ -16,7 +16,7 @@ void	set_sprites(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheigh
 		{
 			if (worldmap[x][y] == '2')
 			{
-				vars->rc.sprite[i].coord_x = (x + 0.5) - 1;
+				vars->rc.sprite[i].coord_x = (x + 0.5);
 				vars->rc.sprite[i].coord_y = y + 0.5;
 				i++;
 			}
@@ -31,7 +31,7 @@ void	init_frame(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight
 	vars->new_image = mlx_new_image(vars->mlx, vars->screen_width, vars->screen_height);
 	vars->get_data = (int *)mlx_get_data_addr(vars->new_image, &vars->bits_per_pixel,
     &vars->size_line, &vars->endian);
-	(!(vars->rc.render.dist_wall = ft_calloc(sizeof(double), vars->screen_width)))
+	if (!(vars->rc.render.dist_wall = ft_calloc(sizeof(double), vars->screen_width)))
 	{
 		exit(0);
 	}
@@ -59,7 +59,10 @@ int     inwindow(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheigh
 	}
 	init_textures(vars, worldmap);
     init_frame(vars, worldmap);
-	mlx_key_hook(vars->win, key_up, &vars);
+	mlx_hook(vars->win, 2, 1, &key_press, vars);
+	mlx_hook(vars->win, 3, 2, &key_release, vars);
+	mlx_hook(vars->win, 33, 0, &key_exit, vars);
+	mlx_loop_hook(vars->mlx, &movement(worldmap), vars);
     mlx_loop(vars->mlx);
 	return (0);
 }

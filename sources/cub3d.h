@@ -107,6 +107,19 @@ typedef struct	s_texture
 	int		height;
 }				t_texture;
 
+typedef struct	s_movement
+{
+	int		up;
+	int		down;
+	int		right;
+	int		left;
+	int		rot_right;
+	int		rot_left;
+	double	old_dir_x;
+	double	old_plan_x;
+	double	speed_rot;
+}				t_movement;
+
 typedef struct		s_rayc
 {
 	t_texture		north;
@@ -159,6 +172,7 @@ typedef struct		s_rayc
 typedef struct		s_vars
 {
 	t_rayc			rc;
+	t_movement		mov;
 	void			*mlx;
 	void			*win;
 	int				screen_width;
@@ -196,9 +210,16 @@ void				error_colors(t_colors *colors, t_data *data);
 void				error_map(t_parse *parse, t_data *data);
 t_vars				*worldmap(t_colors *colors, t_vars *vars, t_parse *parse,
 t_data *data);
+int					movement(t_vars *vars,  int worldmap[vars->rc.mapwidth][vars->rc.mapheight]);
 void				init_values(t_vars *vars, t_data *data);
 int					read_map_cub(char *path);
-int					key_up(int keycode, t_vars *vars);
+int					key_press(int keycode, t_vars *vars);
+int					key_release(int keycode, t_vars *vars)
+int					key_exit(t_vars *vars);
+void				move_left(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight]);
+void				move_right(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight])
+void				move_down(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight])
+void				move_up(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight])
 void 				ray_starts(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight]);
 void				set_sprites(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight]);
 int					initialize(t_colors *colors, t_parse *parse, t_data *data);
