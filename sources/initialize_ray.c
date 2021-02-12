@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 12:34:05 by dsantama          #+#    #+#             */
-/*   Updated: 2021/02/10 11:02:44 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/02/12 13:51:18 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight])
 			{
 				while (x < vars->rc.mapwidth)
 				{
-					worldmap[y][x] = '0';
+					worldmap[x][y] = '0';
 					x++;
 				}
 				x--;
@@ -70,7 +70,7 @@ t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight])
 			{
 				parse->map[n] = '0';
 			}
-			vars->map.map[y][x] = parse->map[n];
+			worldmap[x][y] = parse->map[n];
 			n++;
 			x++;
 		}
@@ -79,7 +79,8 @@ t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight])
 	}
 	return (vars);
 }
-static void		printmap(t_vars *vars)
+
+static void		printmap(t_vars *vars, int	worldmap[vars->rc.mapwidth][vars->rc.mapheight]);
 {
 	int x;
 	int y;
@@ -90,7 +91,7 @@ static void		printmap(t_vars *vars)
     {
         while (x < vars->rc.mapwidth)
         {
-			printf("%c", vars->map.map[x][y]);
+			printf("%c", worldmap[x][y]);
             x++;
         }
         x = 0;
@@ -100,26 +101,19 @@ static void		printmap(t_vars *vars)
 
 t_vars				*worldmap(t_colors *colors, t_vars *vars, t_parse *parse, t_data *data)
 {
+
 	int			worldmap[vars->rc.mapwidth][vars->rc.mapheight];
 	int			x;
 	int			i;
 	
 	x = 0;
 	i = 0;
-	vars->map.map = (char **)ft_calloc(sizeof(char *), (vars->rc.mapheight + 1));
-	while (i < vars->rc.mapheight)
-	{
-		vars->map.map[i] = (char *)ft_calloc(sizeof(char), vars->rc.mapwidth + 1);
-		i++;
-	}
-	vars->map.w_map = vars->rc.mapwidth;
-	vars->map.h_map = vars->rc.mapheight;
 	vars->rc.color_floor = ((ft_atoi(colors->r_f) << 16) + (ft_atoi(colors->g_f) << 8) + \
 	(ft_atoi(colors->b_f)));
 	vars->rc.color_roof = ((ft_atoi(colors->r_c) << 16) + (ft_atoi(colors->g_c) << 8) + \
 	(ft_atoi(colors->b_c)));
 	vars = mapsquare(x, parse, vars, worldmap);
-	printmap(vars);
+	printmap(vars, worldmap);
 	vars = orientation(vars);
 	vars = tresolution(vars, data);
 	init_values(vars, data);
