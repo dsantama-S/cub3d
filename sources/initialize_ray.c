@@ -70,7 +70,6 @@ t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight])
 			{
 				parse->map[n] = '0';
 			}
-			worldmap[x][y] = parse->map[n];
 			vars->map.map[x][y] = parse->map[n];
 			n++;
 			x++;
@@ -105,6 +104,7 @@ t_vars				*worldmap(t_colors *colors, t_vars *vars, t_parse *parse, t_data *data
 	int			x;
 	
 	x = 0;
+	vars->map.map[vars->map.w_map][vars->map.h_map] = worldmap[vars->rc.mapwidth][vars->rc.mapheight];
 	vars->rc.color_floor = ((ft_atoi(colors->r_f) << 16) + (ft_atoi(colors->g_f) << 8) + \
 	(ft_atoi(colors->b_f)));
 	vars->rc.color_roof = ((ft_atoi(colors->r_c) << 16) + (ft_atoi(colors->g_c) << 8) + \
