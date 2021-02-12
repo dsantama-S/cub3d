@@ -169,13 +169,6 @@ typedef struct		s_rayc
 	unsigned int	colortex;
 }					t_rayc;
 
-typedef struct		s_map
-{
-	char			**map;
-	int				w_map;
-	int				h_map;
-}					t_map;
-
 typedef struct		s_vars
 {
 	t_rayc			rc;
@@ -195,6 +188,7 @@ typedef struct		s_vars
 	int				endian;
 	int				width;
 	int				height;
+	int				*wmap;
 }					t_vars;
 
 typedef struct		s_parse
