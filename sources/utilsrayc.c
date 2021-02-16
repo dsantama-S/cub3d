@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 13:23:05 by dsantama          #+#    #+#             */
-/*   Updated: 2021/02/10 11:14:45 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/02/16 11:14:33 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ t_vars *orientation(t_vars *vars)
 	vars->rc.planey = 0.66 * vars->rc.dirx;
 	return (vars);
 }
+
 t_vars *tresolution(t_vars *vars, t_data *data)
 {
 	vars->screen_height = data->swapy;

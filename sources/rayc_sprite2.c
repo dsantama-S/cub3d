@@ -30,7 +30,7 @@ void        last_render_sprite(int x, int i, t_vars *vars)
 	while (y < vars->rc.render.end_y)
 	{
 		d = (y * 256 - vars->screen_height * 128 + vars->rc.render.height * 128);
-		vars->rc.render.tex_y = (d * vars->rc.sprite[i].height / vars->rc.render.height) / 256;
+		vars->rc.render.tex_y = ((d * vars->rc.sprite[i].height / vars->rc.render.height) / 256);
 		get_color(vars, i);
 		if (vars->rc.sprite[i].color != 0xBFD195 && vars->rc.render.transform_y < vars->rc.render.dist_wall[x])
 		{

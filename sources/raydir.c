@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 09:30:17 by dsantama          #+#    #+#             */
-/*   Updated: 2021/02/10 08:40:46 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/02/16 11:17:56 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void		cal_step(t_vars *vars)
 	}
 }
 
-static void		dda(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight])
+static void		dda(t_vars *vars)
 {
 	while (vars->rc.hit == 0)
 	{
@@ -54,7 +54,7 @@ static void		dda(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheigh
 			vars->rc.mapy += vars->rc.stepy;
 			vars->rc.side = 1;
 		}
-		if (worldmap[vars->rc.mapx][vars->rc.mapy] == '1')
+		if (vars->worldmap[vars->rc.mapx + vars->rc.mapy * vars->rc.mapwidth] == '1')
 			vars->rc.hit = 1;
 	}
 }
@@ -89,7 +89,7 @@ void			rayprint(int y, t_vars *vars, int x)
 	}
 }
 
-void			ray_starts(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight])
+void			ray_starts(t_vars *vars)
 {
 	int x;
 	int y;
@@ -100,7 +100,7 @@ void			ray_starts(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheig
 	{
 		raycast(vars, x);
 		cal_step(vars);
-		dda(vars, worldmap);
+		dda(vars);
 		if (vars->rc.side == 0)
 			vars->rc.perpwalldist = (vars->rc.mapx - vars->rc.posx + (1 - vars->rc.stepx) / 2) / vars->rc.raydirx;
 		else

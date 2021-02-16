@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/29 12:44:38 by dsantama          #+#    #+#             */
-/*   Updated: 2021/01/21 13:12:10 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/02/16 11:08:42 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 size_t	ft_strlen(const char *str)
 {
-	int c;
+	size_t c;
 
 	c = 0;
 	while (str[c] != '\0')

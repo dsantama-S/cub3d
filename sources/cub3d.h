@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 09:14:24 by dsantama          #+#    #+#             */
-/*   Updated: 2021/02/12 02:11:52 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/02/16 12:25:44 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,7 @@ typedef struct		s_vars
 {
 	t_rayc			rc;
 	t_movement		mv;
-	t_map			map;
+	int				*worldmap;
 	void			*mlx;
 	void			*win;
 	int				screen_width;
@@ -202,28 +202,28 @@ void				ray_sprite(t_vars *vars);
 t_vars 				*tresolution(t_vars *vars, t_data *data);
 void				set_texture(int x, t_vars *vars);
 void				rayprint(int y, t_vars *vars, int x);
-void				init_frame(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight]);
-void				init_textures(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight]);
+void				init_frame(t_vars *vars);
+void				init_textures(t_vars *vars);
 t_vars				*orientation(t_vars *vars);
-int					inwindow(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight]);
+int					inwindow(t_vars *vars);
 int					get_next_line(int fd, char **line);
 int					analyze_map(t_data *data, t_parse *parse);
 void				error_colors(t_colors *colors, t_data *data);
 void				error_map(t_parse *parse, t_data *data);
 t_vars				*worldmap(t_colors *colors, t_vars *vars, t_parse *parse,
 t_data *data);
-int					movement(t_vars *vars,  int worldmap[vars->rc.mapwidth][vars->rc.mapheight]);
+int					movement(t_vars *vars);
 void				init_values(t_vars *vars, t_data *data);
 int					read_map_cub(char *path);
 int					key_press(int keycode, t_vars *vars);
 int					key_release(int keycode, t_vars *vars);
 int					key_exit(t_vars *vars);
-void				move_left(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight]);
-void				move_right(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight]);
-void				move_down(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight]);
-void				move_up(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight]);
-void 				ray_starts(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight]);
-void				set_sprites(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight]);
+void				move_left(t_vars *vars);
+void				move_right(t_vars *vars);
+void				move_down(t_vars *vars);
+void				move_up(t_vars *vars);
+void 				ray_starts(t_vars *vars);
+void				set_sprites(t_vars *vars);
 int					initialize(t_colors *colors, t_parse *parse, t_data *data);
 int					start(t_data *data, t_rayc *rayc);
 #endif

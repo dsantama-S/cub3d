@@ -1,7 +1,7 @@
 #include "cub3d.h"
 #include "mlx/mlx.h"
 
-void	set_sprites(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight])
+void	set_sprites(t_vars *vars)
 {
 	int	x;
 	int	y;
@@ -14,7 +14,7 @@ void	set_sprites(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheigh
 		x = 0;
 		while (x < vars->rc.mapwidth)
 		{
-			if (worldmap[x][y] == '2')
+			if (vars->worldmap[x + y * vars->rc.mapwidth] == '2')
 			{
 				vars->rc.sprite[i].coord_x = (x + 0.5);
 				vars->rc.sprite[i].coord_y = y + 0.5;
@@ -26,7 +26,7 @@ void	set_sprites(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheigh
 	}
 }
 
-void	init_frame(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight])
+void	init_frame(t_vars *vars)
 {
 	vars->new_image = mlx_new_image(vars->mlx, vars->screen_width, vars->screen_height);
 	vars->get_data = (int *)mlx_get_data_addr(vars->new_image, &vars->bits_per_pixel,
@@ -35,14 +35,14 @@ void	init_frame(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight
 	{
 		exit(0);
 	}
-	ray_starts(vars, worldmap);
+	ray_starts(vars);
 	ray_sprite(vars);
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->new_image, 0, 0);
 	mlx_do_sync(vars->mlx);
 	mlx_destroy_image(vars->mlx, vars->new_image);
 }
 
-int     inwindow(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight])
+int     inwindow(t_vars *vars)
 {
 	if (!(vars->mlx = mlx_init()))
 	{
@@ -57,12 +57,12 @@ int     inwindow(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheigh
 		exit(0);
 		return (0);
 	}
-	init_textures(vars, worldmap);
-    init_frame(vars, worldmap);
+	init_textures(vars);
+    init_frame(vars);
 	mlx_hook(vars->win, 2, 1, &key_press, vars);
 	mlx_hook(vars->win, 3, 2, &key_release, vars);
 	mlx_hook(vars->win, 33, 0, &key_exit, vars);
-	//mlx_loop_hook(vars->mlx, &movement, vars);
+	mlx_loop_hook(vars->mlx, &movement, vars);
     mlx_loop(vars->mlx);
 	return (0);
 }

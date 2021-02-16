@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 12:34:05 by dsantama          #+#    #+#             */
-/*   Updated: 2021/02/12 13:51:18 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/02/16 11:09:34 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,7 @@ static t_vars		*posmap(int x, int y, t_parse *parse, t_vars *vars)
 	return (vars);
 }
 
-static t_vars		*mapsquare(int x, t_parse *parse,
-t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight])
+static t_vars		*mapsquare(int x, t_parse *parse, t_vars *vars)
 {
 	int n;
 	int y;
@@ -61,7 +60,7 @@ t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight])
 			{
 				while (x < vars->rc.mapwidth)
 				{
-					worldmap[x][y] = '0';
+					vars->worldmap[x + y * vars->rc.mapwidth] = '0';
 					x++;
 				}
 				x--;
@@ -70,7 +69,7 @@ t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight])
 			{
 				parse->map[n] = '0';
 			}
-			worldmap[x][y] = parse->map[n];
+			vars->worldmap[x + y * vars->rc.mapwidth] = parse->map[n];
 			n++;
 			x++;
 		}
@@ -82,23 +81,21 @@ t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight])
 
 t_vars				*worldmap(t_colors *colors, t_vars *vars, t_parse *parse, t_data *data)
 {
-
-	int			worldmap[vars->rc.mapwidth][vars->rc.mapheight];
 	int			x;
 	int			i;
 	
 	x = 0;
 	i = 0;
+	vars->worldmap = malloc(sizeof(int) * vars->rc.mapwidth * vars->rc.mapheight);
 	vars->rc.color_floor = ((ft_atoi(colors->r_f) << 16) + (ft_atoi(colors->g_f) << 8) + \
 	(ft_atoi(colors->b_f)));
 	vars->rc.color_roof = ((ft_atoi(colors->r_c) << 16) + (ft_atoi(colors->g_c) << 8) + \
 	(ft_atoi(colors->b_c)));
-	vars = mapsquare(x, parse, vars, worldmap);
-	printmap(vars, worldmap);
+	vars = mapsquare(x, parse, vars);
 	vars = orientation(vars);
 	vars = tresolution(vars, data);
 	init_values(vars, data);
-	inwindow(vars, worldmap);
+	inwindow(vars);
 	return (vars);
 }
 

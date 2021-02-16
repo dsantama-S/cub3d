@@ -36,7 +36,7 @@ static t_texture	put_texture(char *root_texture, t_vars *vars)
 	return (texture);
 }
 
-void	init_textures(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.mapheight])
+void	init_textures(t_vars *vars)
 {
     int i;
 	
@@ -47,7 +47,7 @@ void	init_textures(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.maphei
     i = -1;
     while (++i < vars->rc.sprites)
         vars = put_sprite(vars->rc.texture_sprite, i, vars);
-    set_sprites(vars, worldmap);
+    set_sprites(vars);
 }
 
 static t_texture	texture_wall(t_vars *vars)
