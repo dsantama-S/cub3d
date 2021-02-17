@@ -6,18 +6,23 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 12:34:05 by dsantama          #+#    #+#             */
-/*   Updated: 2021/02/17 09:38:42 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/02/17 12:18:44 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+static void			numbersprites(t_parse *parse, t_vars *vars, int n)
+{
+	if (parse->map[n] == '2')
+		vars->rc.sprites++;
+}
 
 static t_vars		*posmap(int x, int y, t_parse *parse, t_vars *vars)
 {
 	int n;
 
 	n = 0;
-	vars->rc.sprites = 0;
 	while (parse->map[n] != '\0')
 	{
 		if (parse->map[n] == '\n')
@@ -27,10 +32,7 @@ static t_vars		*posmap(int x, int y, t_parse *parse, t_vars *vars)
 			y++;
 			x = 0;
 		}
-		if (parse->map[n] == '2')
-		{
-			vars->rc.sprites++;
-		}
+		numbersprites(parse, vars, n);
 		if (parse->map[n] == 'N' || parse->map[n] == 'S' ||
 		parse->map[n] == 'E' || parse->map[n] == 'W')
 		{
@@ -57,18 +59,9 @@ static t_vars		*mapsquare(int x, t_parse *parse, t_vars *vars)
 		while (x < vars->rc.mapwidth)
 		{
 			if (parse->map[n] == '\n' || parse->map[n] == '\0')
-			{
-				while (x < vars->rc.mapwidth)
-				{
-					vars->worldmap[x + y * vars->rc.mapwidth] = '0';
-					x++;
-				}
-				x--;
-			}
+				x = mapzeros(vars, x, y);
 			if (parse->map[n] == ' ')
-			{
 				parse->map[n] = '0';
-			}
 			vars->worldmap[x + y * vars->rc.mapwidth] = parse->map[n];
 			n++;
 			x++;
@@ -79,37 +72,20 @@ static t_vars		*mapsquare(int x, t_parse *parse, t_vars *vars)
 	return (vars);
 }
 
-void		printmap(t_vars *vars)
+t_vars				*worldmap(t_colors *colors, t_vars *vars, t_parse *parse,
+t_data *data)
 {
-	int x;
-	int y;
+	int		x;
+	int		i;
 
-	x = 0;
-	y = 0;
-	 while (y < vars->rc.mapheight)
-    {
-        while (x < vars->rc.mapwidth)
-        {
-			printf("%c", vars->worldmap[x + y * vars->rc.mapwidth]);
-            x++;
-        }
-        x = 0;
-        y++;
-    }
-}
-
-t_vars				*worldmap(t_colors *colors, t_vars *vars, t_parse *parse, t_data *data)
-{
-	int			x;
-	int			i;
-	
 	x = 0;
 	i = 0;
-	vars->worldmap = malloc(sizeof(int) * vars->rc.mapwidth * vars->rc.mapheight);
-	vars->rc.color_floor = ((ft_atoi(colors->r_f) << 16) + (ft_atoi(colors->g_f) << 8) + \
-	(ft_atoi(colors->b_f)));
-	vars->rc.color_roof = ((ft_atoi(colors->r_c) << 16) + (ft_atoi(colors->g_c) << 8) + \
-	(ft_atoi(colors->b_c)));
+	vars->worldmap = malloc(sizeof(int) \
+	* vars->rc.mapwidth * vars->rc.mapheight);
+	vars->rc.color_floor = ((ft_atoi(colors->r_f) << 16) + \
+	(ft_atoi(colors->g_f) << 8) + (ft_atoi(colors->b_f)));
+	vars->rc.color_roof = ((ft_atoi(colors->r_c) << 16) + \
+	(ft_atoi(colors->g_c) << 8) + (ft_atoi(colors->b_c)));
 	vars = mapsquare(x, parse, vars);
 	vars = orientation(vars);
 	vars = tresolution(vars, data);
@@ -118,7 +94,7 @@ t_vars				*worldmap(t_colors *colors, t_vars *vars, t_parse *parse, t_data *data
 	return (vars);
 }
 
-int				initialize(t_colors *colors, t_parse *parse, t_data *data)
+int					initialize(t_colors *colors, t_parse *parse, t_data *data)
 {
 	t_vars		*vars;
 	int			y;
@@ -130,6 +106,7 @@ int				initialize(t_colors *colors, t_parse *parse, t_data *data)
 	if (!vars)
 		return (0);
 	vars->rc.mapwidth = 0;
+	vars->rc.sprites = 0;
 	vars = posmap(x, y, parse, vars);
 	vars = worldmap(colors, vars, parse, data);
 	return (0);

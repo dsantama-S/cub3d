@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/22 10:55:05 by dsantama          #+#    #+#             */
-/*   Updated: 2021/01/21 14:12:32 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/02/17 12:27:56 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 //error de la resolución cuando no escribo numero
 //error de los colores cuando no escribo numero
-
 
 void				error_colors(t_colors *colors, t_data *data)
 {
@@ -63,4 +62,15 @@ void				error_map(t_parse *parse, t_data *data)
 	}
 	if (c > 1 || c == 0)
 		data->error = -1;
+}
+
+int					mapzeros(t_vars *vars, int x, int y)
+{
+	while (x < vars->rc.mapwidth)
+	{
+		vars->worldmap[x + y * vars->rc.mapwidth] = '0';
+		x++;
+	}
+	x--;
+	return (x);
 }

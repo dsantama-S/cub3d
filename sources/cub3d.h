@@ -6,16 +6,16 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 09:14:24 by dsantama          #+#    #+#             */
-/*   Updated: 2021/02/17 09:34:55 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/02/17 12:22:36 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUFFER_SIZE
-# define BUFFER_SIZE 1
-#endif
-
 #ifndef CUB3D_H
 # define CUB3D_H
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1
+# endif
 
 # include "libft/libft.h"
 # include <sys/types.h>
@@ -61,64 +61,64 @@ typedef struct		s_colors
 	char			*b_c;
 }					t_colors;
 
-typedef struct	s_rendering
+typedef struct		s_rendering
 {
-	double	x;
-	double	y;
-	double	inv_det;
-	double	transform_x;
-	double	transform_y;
-	int		screen_x;
-	int		start_x;
-	int		start_y;
-	int		end_x;
-	int		end_y;
-	int		tex_x;
-	int		tex_y;
-	int		height;
-	int		width;
-	double	*dist_wall;
-}				t_rendering;
+	double			x;
+	double			y;
+	double			inv_det;
+	double			transform_x;
+	double			transform_y;
+	int				screen_x;
+	int				start_x;
+	int				start_y;
+	int				end_x;
+	int				end_y;
+	int				tex_x;
+	int				tex_y;
+	int				height;
+	int				width;
+	double			*dist_wall;
+}					t_rendering;
 
-typedef struct	s_sprite
+typedef struct		s_sprite
 {
-	int		order;
-	double	distance;
-	double	coord_x;
-	double	coord_y;
-	void	*img_ptr;
-	int		*get_data;
-	int		bits_per_pixel;
-	int		size_line;
-	int		endian;
-	int		width;
-	int		height;
-	int		color;
-}				t_sprite;
+	int				order;
+	double			distance;
+	double			coord_x;
+	double			coord_y;
+	void			*img_ptr;
+	int				*get_data;
+	int				bits_per_pixel;
+	int				size_line;
+	int				endian;
+	int				width;
+	int				height;
+	int				color;
+}					t_sprite;
 
-typedef struct	s_texture
+typedef struct		s_texture
 {
-	void	*img_ptr;
-	int		bits_per_pixel;
-	int		size_line;
-	int		endian;
-	int		*get_data;
-	int		width;
-	int		height;
-}				t_texture;
+	void			*img_ptr;
+	int				bits_per_pixel;
+	int				size_line;
+	int				endian;
+	int				*get_data;
+	int				width;
+	int				height;
+}					t_texture;
 
-typedef struct	s_movement
+typedef struct		s_movement
 {
-	int		up;
-	int		down;
-	int		right;
-	int		left;
-	int		rot_right;
-	int		rot_left;
-	double	old_dir_x;
-	double	old_plan_x;
-	double	speed_rot;
-}				t_movement;
+	int				up;
+	int				down;
+	int				right;
+	int				left;
+	int				rot_right;
+	int				rot_left;
+	double			old_dir_x;
+	double			old_plan_x;
+	double			speed_rot;
+}					t_movement;
 
 typedef struct		s_rayc
 {
@@ -179,12 +179,12 @@ typedef struct		s_vars
 	int				screen_width;
 	int				screen_height;
 	void			*img;
-    char			*addr;
+	char			*addr;
 	void			*img_ptr;
 	int				*get_data;
 	void			*new_image;
-    int				bits_per_pixel;
-    int				size_line;
+	int				bits_per_pixel;
+	int				size_line;
 	int				endian;
 	int				width;
 	int				height;
@@ -199,7 +199,7 @@ typedef struct		s_parse
 void				free_sprite(t_vars *vars);
 void				last_render_sprite(int x, int i, t_vars *vars);
 void				ray_sprite(t_vars *vars);
-t_vars 				*tresolution(t_vars *vars, t_data *data);
+t_vars				*tresolution(t_vars *vars, t_data *data);
 void				set_texture(int x, t_vars *vars);
 void				rayprint(int y, t_vars *vars, int x);
 void				init_frame(t_vars *vars);
@@ -222,9 +222,12 @@ void				move_left(t_vars *vars);
 void				move_right(t_vars *vars);
 void				move_down(t_vars *vars);
 void				move_up(t_vars *vars);
-void				printmap(t_vars *vars);
-void 				ray_starts(t_vars *vars);
+void				move_rot_left(t_vars *vars);
+void				move_rot_right(t_vars *vars);
+void				ray_starts(t_vars *vars);
 void				set_sprites(t_vars *vars);
+int					mapzeros(t_vars *vars, int x, int y);
+char				*res(t_data *data, char *aux2);
 int					initialize(t_colors *colors, t_parse *parse, t_data *data);
 int					start(t_data *data, t_rayc *rayc);
 #endif
