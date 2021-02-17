@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 09:14:24 by dsantama          #+#    #+#             */
-/*   Updated: 2021/02/16 12:25:44 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/02/17 09:34:55 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,6 +222,7 @@ void				move_left(t_vars *vars);
 void				move_right(t_vars *vars);
 void				move_down(t_vars *vars);
 void				move_up(t_vars *vars);
+void				printmap(t_vars *vars);
 void 				ray_starts(t_vars *vars);
 void				set_sprites(t_vars *vars);
 int					initialize(t_colors *colors, t_parse *parse, t_data *data);

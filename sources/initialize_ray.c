@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 12:34:05 by dsantama          #+#    #+#             */
-/*   Updated: 2021/02/16 11:09:34 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/02/17 09:38:42 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,25 @@ static t_vars		*mapsquare(int x, t_parse *parse, t_vars *vars)
 		y++;
 	}
 	return (vars);
+}
+
+void		printmap(t_vars *vars)
+{
+	int x;
+	int y;
+
+	x = 0;
+	y = 0;
+	 while (y < vars->rc.mapheight)
+    {
+        while (x < vars->rc.mapwidth)
+        {
+			printf("%c", vars->worldmap[x + y * vars->rc.mapwidth]);
+            x++;
+        }
+        x = 0;
+        y++;
+    }
 }
 
 t_vars				*worldmap(t_colors *colors, t_vars *vars, t_parse *parse, t_data *data)

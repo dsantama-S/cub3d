@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 09:44:53 by dsantama          #+#    #+#             */
-/*   Updated: 2021/02/16 12:47:14 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/02/17 08:56:31 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,10 @@ int	key_release(int keycode, t_vars *vars)
 		vars->mv.right = 0;
 	if (keycode == 0)
 		vars->mv.left = 0;
+	if (keycode == 124)
+		vars->mv.rot_right = 0;
+	if (keycode == 123)
+		vars->mv.rot_left = 0;
 	if (keycode == 53)
 		key_exit(vars);
 	return (0);
@@ -63,6 +67,10 @@ int		key_press(int keycode, t_vars *vars)
 		vars->mv.right = 1;
 	if (keycode == 0)
 		vars->mv.left = 1;
+	if (keycode == 124)
+		vars->mv.rot_right = 1;
+	if (keycode == 123)
+		vars->mv.rot_left = 1;
 	printf("%i\n", keycode);
 	return 0;
 }

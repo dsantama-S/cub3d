@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 09:40:27 by dsantama          #+#    #+#             */
-/*   Updated: 2021/02/05 11:10:19 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/02/17 09:26:28 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,4 +138,43 @@ static void		printmap(t_vars *vars, int worldmap[vars->rc.mapwidth][vars->rc.map
         x = 0;
         y++;
     }
+}
+
+static void		printmap(t_vars *vars)
+{
+	int x;
+	int y;
+
+	x = 0;
+	y = 0;
+	 while (y < vars->rc.mapheight)
+    {
+        while (x < vars->rc.mapwidth)
+        {
+			printf("%c", vars->worldmap[x + y * vars->rc.mapwidth]);
+            x++;
+        }
+        x = 0;
+        y++;
+    }
+}
+
+void	move_up(t_vars *vars)
+{
+	int posx;
+	int posy;
+	int dirx;
+	int diry;
+
+	posx = vars->rc.posx;
+	dirx = vars->rc.dirx;
+	posy = vars->rc.posy;
+	diry = vars->rc.diry;
+	if (vars->mv.up == 1)
+	{
+		if (vars->worldmap[(posx + dirx * 0.06)) * posy] != '1' && vars->worldmap[(posx + dirx * 0.06) * posy] != '2')
+			posx += dirx * 0.06;
+		if (vars->worldmap[posx * (posy + diry * 0.06)] != '1' && vars->worldmap[posx * (posy + diry * 0.06)] != '2')
+			posy += diry * 0.06;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 09:30:17 by dsantama          #+#    #+#             */
-/*   Updated: 2021/02/16 11:17:56 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/02/17 09:07:30 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void		cal_step(t_vars *vars)
 	else
 	{
 		vars->rc.stepx = 1;
-		vars->rc.sidedistx = (vars->rc.mapx + 1.0 - vars->rc.posx);
+		vars->rc.sidedistx = (vars->rc.mapx + 1.0 - vars->rc.posx) * vars->rc.deltadistx;
 	}
 	if (vars->rc.raydiry < 0)
 	{
@@ -34,7 +34,7 @@ static void		cal_step(t_vars *vars)
 	else
 	{
 		vars->rc.stepy = 1;
-		vars->rc.sidedisty = (vars->rc.mapy + 1.0 - vars->rc.posy);
+		vars->rc.sidedisty = (vars->rc.mapy + 1.0 - vars->rc.posy) * vars->rc.deltadisty;
 	}
 }
 
