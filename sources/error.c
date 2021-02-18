@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/22 10:55:05 by dsantama          #+#    #+#             */
-/*   Updated: 2021/02/17 12:27:56 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/02/18 08:41:50 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,20 @@ int					mapzeros(t_vars *vars, int x, int y)
 	}
 	x--;
 	return (x);
+}
+
+char				*res_width(char *aux, char *aux2)
+{
+	char	*str;
+	int		n;
+
+	n = 0;
+	str = ft_strchr(aux2, ' ');
+	str++;
+	while (str[n] != ' ' && str[n] != '\0')
+	{
+		aux[n] = str[n];
+		n++;
+	}
+	return (aux);
 }

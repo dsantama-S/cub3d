@@ -1,31 +1,40 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ray_sprite.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/18 08:51:46 by dsantama          #+#    #+#             */
+/*   Updated: 2021/02/18 09:02:50 by dsantama         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 #include "mlx/mlx.h"
 
-static void	aux_render_sprite(t_vars *vars, int i)
+static void		aux_render_sprite(t_vars *vars, int i)
 {
-	vars->rc.render.x = vars->rc.sprite[vars->rc.sprite[i].order].coord_x - vars->rc.posx;
-	vars->rc.render.y = vars->rc.sprite[vars->rc.sprite[i].order].coord_y - vars->rc.posy;
-	vars->rc.render.inv_det = 1 / (vars->rc.planex * vars->rc.diry - vars->rc.dirx * vars->rc.planey);
-	vars->rc.render.transform_x = vars->rc.render.inv_det * (vars->rc.diry * vars->rc.render.x - vars->rc.dirx * vars->rc.render.y);
-	vars->rc.render.transform_y = vars->rc.render.inv_det * (-vars->rc.planey * vars->rc.render.x + vars->rc.planex * vars->rc.render.y);
-	vars->rc.render.screen_x = (int)((vars->screen_width / 2) * (1 + vars->rc.render.transform_x / vars->rc.render.transform_y));
-	vars->rc.render.height = abs((int)(vars->screen_height / vars->rc.render.transform_y));
-	vars->rc.render.start_y = -vars->rc.render.height / 2 + vars->screen_height / 2;	
-	if (vars->rc.render.start_y < 0)
-		vars->rc.render.start_y = 0;
-	vars->rc.render.end_y = vars->rc.render.height / 2 + vars->screen_height / 2;
-	if (vars->rc.render.end_y >= vars->screen_height)
-		vars->rc.render.end_y = vars->screen_height - 1;
-	vars->rc.render.width = abs((int)(vars->screen_height / vars->rc.render.transform_y));
-	vars->rc.render.start_x = -vars->rc.render.width / 2 + vars->rc.render.screen_x;
-	if (vars->rc.render.start_x < 0)
-		vars->rc.render.start_x = 0;
-	vars->rc.render.end_x = vars->rc.render.width / 2 + vars->rc.render.screen_x;
-	if (vars->rc.render.end_x >= vars->screen_width)
-		vars->rc.render.end_x = vars->screen_width - 1;
+	vars->rc.render.x = vars->rc.sprite[vars->rc.sprite[i].order].coord_x \
+	- vars->rc.posx;
+	vars->rc.render.y = vars->rc.sprite[vars->rc.sprite[i].order].coord_y \
+	- vars->rc.posy;
+	vars->rc.render.inv_det = 1 / (vars->rc.planex * vars->rc.diry \
+	- vars->rc.dirx * vars->rc.planey);
+	vars->rc.render.transform_x = vars->rc.render.inv_det * \
+	(vars->rc.diry * vars->rc.render.x - vars->rc.dirx * vars->rc.render.y);
+	vars->rc.render.transform_y = vars->rc.render.inv_det * (-vars->rc.planey \
+	* vars->rc.render.x + vars->rc.planex * vars->rc.render.y);
+	vars->rc.render.screen_x = (int)((vars->screen_width / 2) * \
+	(1 + vars->rc.render.transform_x / vars->rc.render.transform_y));
+	vars->rc.render.height = abs((int)(vars->screen_height / \
+	vars->rc.render.transform_y));
+	vars->rc.render.start_y = -vars->rc.render.height / \
+	2 + vars->screen_height / 2;
+	aux_render_sprite2(vars);
 }
 
-static void	render_sprite(t_vars *vars)
+static void		render_sprite(t_vars *vars)
 {
 	int	i;
 	int	x;
@@ -37,7 +46,9 @@ static void	render_sprite(t_vars *vars)
 		x = vars->rc.render.start_x;
 		while (x < vars->rc.render.end_x && x < vars->screen_width)
 		{
-			vars->rc.render.tex_x = (int)(256 * (x - (-vars->rc.render.width / 2 + vars->rc.render.screen_x)) * vars->rc.sprite[i].width / vars->rc.render.width) / 256;
+			vars->rc.render.tex_x = (int)(256 * (x - (-vars->rc.render.width / \
+			2 + vars->rc.render.screen_x)) * vars->rc.sprite[i].width / \
+			vars->rc.render.width) / 256;
 			if (vars->rc.render.transform_y > 0)
 				last_render_sprite(x, i, vars);
 			x++;
@@ -46,7 +57,7 @@ static void	render_sprite(t_vars *vars)
 	}
 }
 
-static void	sort_sprite(t_vars *vars)
+static void		sort_sprite(t_vars *vars)
 {
 	int	i;
 	int	swap;
@@ -54,7 +65,8 @@ static void	sort_sprite(t_vars *vars)
 	i = 0;
 	while (i + 1 < vars->rc.sprites)
 	{
-		if (vars->rc.sprite[vars->rc.sprite[i].order].distance < vars->rc.sprite[vars->rc.sprite[i + 1].order].distance)
+		if (vars->rc.sprite[vars->rc.sprite[i].order].distance < \
+		vars->rc.sprite[vars->rc.sprite[i + 1].order].distance)
 		{
 			swap = vars->rc.sprite[i].order;
 			vars->rc.sprite[i].order = vars->rc.sprite[i + 1].order;
@@ -65,7 +77,7 @@ static void	sort_sprite(t_vars *vars)
 	}
 }
 
-static void	sprite_distance(t_vars *vars)
+static void		sprite_distance(t_vars *vars)
 {
 	int	i;
 
@@ -74,13 +86,15 @@ static void	sprite_distance(t_vars *vars)
 	{
 		vars->rc.sprite[i].order = i;
 		vars->rc.sprite[vars->rc.sprite[i].order].distance = \
-        pow(vars->rc.posx - vars->rc.sprite[vars->rc.sprite[i].order].coord_x, 2) + \
-        pow(vars->rc.posy - vars->rc.sprite[vars->rc.sprite[i].order].coord_y, 2);
+		pow(vars->rc.posx - \
+		vars->rc.sprite[vars->rc.sprite[i].order].coord_x, 2) + \
+		pow(vars->rc.posy - \
+		vars->rc.sprite[vars->rc.sprite[i].order].coord_y, 2);
 		i++;
 	}
 }
 
-void	ray_sprite(t_vars *vars)
+void			ray_sprite(t_vars *vars)
 {
 	sprite_distance(vars);
 	sort_sprite(vars);

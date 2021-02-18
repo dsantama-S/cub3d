@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   window.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/18 08:52:19 by dsantama          #+#    #+#             */
+/*   Updated: 2021/02/18 09:14:51 by dsantama         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 #include "mlx/mlx.h"
 
@@ -28,10 +40,12 @@ void	set_sprites(t_vars *vars)
 
 void	init_frame(t_vars *vars)
 {
-	vars->new_image = mlx_new_image(vars->mlx, vars->screen_width, vars->screen_height);
-	vars->get_data = (int *)mlx_get_data_addr(vars->new_image, &vars->bits_per_pixel,
-    &vars->size_line, &vars->endian);
-	if (!(vars->rc.render.dist_wall = ft_calloc(sizeof(double), vars->screen_width)))
+	vars->new_image = mlx_new_image(vars->mlx, \
+	vars->screen_width, vars->screen_height);
+	vars->get_data = (int *)mlx_get_data_addr(vars->new_image, \
+	&vars->bits_per_pixel, &vars->size_line, &vars->endian);
+	if (!(vars->rc.render.dist_wall = \
+	ft_calloc(sizeof(double), vars->screen_width)))
 	{
 		exit(0);
 	}
@@ -42,7 +56,7 @@ void	init_frame(t_vars *vars)
 	mlx_destroy_image(vars->mlx, vars->new_image);
 }
 
-int     inwindow(t_vars *vars)
+int		inwindow(t_vars *vars)
 {
 	if (!(vars->mlx = mlx_init()))
 	{
@@ -50,7 +64,8 @@ int     inwindow(t_vars *vars)
 		exit(0);
 		return (0);
 	}
-	if (!(vars->win = mlx_new_window(vars->mlx, vars->screen_width, vars->screen_height, "Cub3d")))
+	if (!(vars->win = mlx_new_window(vars->mlx, \
+	vars->screen_width, vars->screen_height, "Cub3d")))
 	{
 		free(vars->mlx);
 		free(vars);
@@ -58,11 +73,11 @@ int     inwindow(t_vars *vars)
 		return (0);
 	}
 	init_textures(vars);
-    init_frame(vars);
+	init_frame(vars);
 	mlx_hook(vars->win, 2, 1, &key_press, vars);
 	mlx_hook(vars->win, 3, 2, &key_release, vars);
 	mlx_hook(vars->win, 33, 0, &key_exit, vars);
 	mlx_loop_hook(vars->mlx, &movement, vars);
-    mlx_loop(vars->mlx);
+	mlx_loop(vars->mlx);
 	return (0);
 }

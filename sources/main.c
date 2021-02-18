@@ -6,13 +6,13 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 10:44:08 by dsantama          #+#    #+#             */
-/*   Updated: 2020/12/30 09:52:21 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/02/18 08:51:39 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int main(void)
+int		main(void)
 {
 	char *path;
 

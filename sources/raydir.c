@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 09:30:17 by dsantama          #+#    #+#             */
-/*   Updated: 2021/02/17 09:07:30 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/02/18 09:11:23 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,26 @@ static void		cal_step(t_vars *vars)
 	if (vars->rc.raydirx < 0)
 	{
 		vars->rc.stepx = -1;
-		vars->rc.sidedistx = (vars->rc.posx - vars->rc.mapx) * vars->rc.deltadistx;
+		vars->rc.sidedistx = (vars->rc.posx - vars->rc.mapx) * \
+		vars->rc.deltadistx;
 	}
 	else
 	{
 		vars->rc.stepx = 1;
-		vars->rc.sidedistx = (vars->rc.mapx + 1.0 - vars->rc.posx) * vars->rc.deltadistx;
+		vars->rc.sidedistx = (vars->rc.mapx + 1.0 - vars->rc.posx) * \
+		vars->rc.deltadistx;
 	}
 	if (vars->rc.raydiry < 0)
 	{
 		vars->rc.stepy = -1;
-		vars->rc.sidedisty = (vars->rc.posy - vars->rc.mapy) * vars->rc.deltadisty;
+		vars->rc.sidedisty = (vars->rc.posy - vars->rc.mapy) * \
+		vars->rc.deltadisty;
 	}
 	else
 	{
 		vars->rc.stepy = 1;
-		vars->rc.sidedisty = (vars->rc.mapy + 1.0 - vars->rc.posy) * vars->rc.deltadisty;
+		vars->rc.sidedisty = (vars->rc.mapy + 1.0 - vars->rc.posy) * \
+		vars->rc.deltadisty;
 	}
 }
 
@@ -54,12 +58,13 @@ static void		dda(t_vars *vars)
 			vars->rc.mapy += vars->rc.stepy;
 			vars->rc.side = 1;
 		}
-		if (vars->worldmap[vars->rc.mapx + vars->rc.mapy * vars->rc.mapwidth] == '1')
+		if (vars->worldmap[vars->rc.mapx + \
+		vars->rc.mapy * vars->rc.mapwidth] == '1')
 			vars->rc.hit = 1;
 	}
 }
 
-static void			raycast(t_vars *vars, int x)
+static void		raycast(t_vars *vars, int x)
 {
 	vars->rc.camerax = 2 * x / (double)vars->screen_width - 1;
 	vars->rc.raydirx = vars->rc.dirx + vars->rc.planex * vars->rc.camerax;
@@ -83,8 +88,10 @@ void			rayprint(int y, t_vars *vars, int x)
 	y = vars->rc.drawend;
 	while (y < vars->screen_height)
 	{
-		vars->get_data[x + y * (vars->size_line / 4)] = vars->rc.color_floor;
-		vars->get_data[x + (vars->screen_height - y - 1) * (vars->size_line / 4)] = vars->rc.color_roof;
+		vars->get_data[x + y * (vars->size_line / 4)] = \
+		vars->rc.color_floor;
+		vars->get_data[x + (vars->screen_height - y - 1) * \
+		(vars->size_line / 4)] = vars->rc.color_roof;
 		y++;
 	}
 }
@@ -102,9 +109,11 @@ void			ray_starts(t_vars *vars)
 		cal_step(vars);
 		dda(vars);
 		if (vars->rc.side == 0)
-			vars->rc.perpwalldist = (vars->rc.mapx - vars->rc.posx + (1 - vars->rc.stepx) / 2) / vars->rc.raydirx;
+			vars->rc.perpwalldist = (vars->rc.mapx - vars->rc.posx + \
+			(1 - vars->rc.stepx) / 2) / vars->rc.raydirx;
 		else
-			vars->rc.perpwalldist = (vars->rc.mapy - vars->rc.posy + (1 - vars->rc.stepy) / 2) / vars->rc.raydiry;
+			vars->rc.perpwalldist = (vars->rc.mapy - vars->rc.posy + \
+			(1 - vars->rc.stepy) / 2) / vars->rc.raydiry;
 		rayprint(y, vars, x);
 		vars->rc.render.dist_wall[x] = vars->rc.perpwalldist;
 		x++;

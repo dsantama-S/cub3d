@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 09:14:24 by dsantama          #+#    #+#             */
-/*   Updated: 2021/02/17 12:22:36 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/02/18 09:02:24 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,7 +227,8 @@ void				move_rot_right(t_vars *vars);
 void				ray_starts(t_vars *vars);
 void				set_sprites(t_vars *vars);
 int					mapzeros(t_vars *vars, int x, int y);
-char				*res(t_data *data, char *aux2);
+void				aux_render_sprite2(t_vars *vars);
+char				*res_width(char *aux, char *aux2);
 int					initialize(t_colors *colors, t_parse *parse, t_data *data);
 int					start(t_data *data, t_rayc *rayc);
 #endif

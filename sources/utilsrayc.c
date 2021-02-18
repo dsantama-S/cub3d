@@ -6,14 +6,14 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 13:23:05 by dsantama          #+#    #+#             */
-/*   Updated: 2021/02/17 11:59:18 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/02/18 09:12:23 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include "mlx/mlx.h"
 
-t_vars *orientation(t_vars *vars)
+t_vars	*orientation(t_vars *vars)
 {
 	if (vars->rc.direction == 'N')
 	{
@@ -40,7 +40,7 @@ t_vars *orientation(t_vars *vars)
 	return (vars);
 }
 
-t_vars *tresolution(t_vars *vars, t_data *data)
+t_vars	*tresolution(t_vars *vars, t_data *data)
 {
 	vars->screen_height = data->swapy;
 	vars->screen_width = data->swapx;
@@ -56,8 +56,9 @@ void	init_values(t_vars *vars, t_data *data)
 	vars->rc.texture_sprite = data->texture_sprite;
 	vars->mlx = NULL;
 	vars->win = NULL;
-	if (!(vars->rc.sprite = (t_sprite *)ft_calloc(sizeof(t_sprite), vars->rc.sprites)))
+	if (!(vars->rc.sprite = \
+	(t_sprite *)ft_calloc(sizeof(t_sprite), vars->rc.sprites)))
 	{
 		exit(0);
-	};
+	}
 }
