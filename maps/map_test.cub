@@ -1,15 +1,15 @@
 R 1200 1000
 
-SO textures/purplestone.xpm
+SO textures/brick.xpm
 
 
 
-NO textures/eagle.xpm
+NO textures/bookshelf.xpm
 
 
 WE textures/wood.xpm
 
-EA textures/bluestone.xpm
+EA textures/bookshelfdark.xpm
 
 S textures/barril.xpm
 
