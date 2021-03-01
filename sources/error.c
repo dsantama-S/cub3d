@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/22 10:55:05 by dsantama          #+#    #+#             */
-/*   Updated: 2021/02/18 08:41:50 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/03/01 08:56:53 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,15 @@ int					mapzeros(t_vars *vars, int x, int y)
 {
 	while (x < vars->rc.mapwidth)
 	{
-		vars->worldmap[x + y * vars->rc.mapwidth] = '0';
+		if (y == (vars->rc.mapheight - 1))
+			vars->worldmap[x + y * vars->rc.mapwidth] = '1';
+		else
+		{
+			if (x == (vars->rc.mapwidth - 2))
+				vars->worldmap[x + y * vars->rc.mapwidth] = '1';
+			else
+				vars->worldmap[x + y * vars->rc.mapwidth] = '0';
+		}
 		x++;
 	}
 	x--;

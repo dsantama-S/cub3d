@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 09:14:24 by dsantama          #+#    #+#             */
-/*   Updated: 2021/02/18 09:02:24 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/03/01 09:18:42 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,6 +193,7 @@ typedef struct		s_vars
 
 typedef struct		s_parse
 {
+	char			error;
 	char			*map;
 }					t_parse;
 
