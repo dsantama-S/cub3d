@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 13:23:05 by dsantama          #+#    #+#             */
-/*   Updated: 2021/02/18 09:12:23 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/03/09 09:11:07 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,26 @@ void	init_values(t_vars *vars, t_data *data)
 	(t_sprite *)ft_calloc(sizeof(t_sprite), vars->rc.sprites)))
 	{
 		exit(0);
+	}
+}
+
+void	error_wall_x(t_parse *parse, int n, int x, t_vars *vars)
+{
+	if (x == vars->rc.mapwidth - 2)
+	{
+		if (parse->map[n] == '0')
+		{
+			parse->error = '1';
+			parse->map[n] = '1';
+		}
+	}
+}
+
+void	invalid(t_parse *parse)
+{
+	if (parse->error == '1')
+	{
+		write(1, "Su mapa es inválido.\
+		Generando mapa idéntico rodeado de muros.\n", 65);
 	}
 }

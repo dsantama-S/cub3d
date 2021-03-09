@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 12:34:05 by dsantama          #+#    #+#             */
-/*   Updated: 2021/03/03 10:44:21 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/03/09 09:19:58 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ static t_vars		*mapsquare(int x, t_parse *parse, t_vars *vars)
 
 	y = 0;
 	n = 0;
-	parse->error = '0';
 	while (y < vars->rc.mapheight)
 	{
 		while (x < vars->rc.mapwidth)
@@ -64,32 +63,8 @@ static t_vars		*mapsquare(int x, t_parse *parse, t_vars *vars)
 				x = mapzeros(vars, x, y);
 				parse->map[n + 1] = '1';
 			}
-			if (parse->map[n] == ' ')
-				parse->map[n] = '0';
-			if (x == vars->rc.mapwidth - 2)
-			{
-				if (parse->map[n] == '0')
-				{
-					parse->error = '1';
-					parse->map[n] = '1';
-				}
-			}
-			if (y == 0)
-			{
-				if (parse->map[n] == '0')
-				{
-					parse->error = '1';
-					parse->map[n] = '1';
-				}
-			}
-			if (y == (vars->rc.mapheight - 1))
-			{
-				if (parse->map[n] == '0')
-				{
-					parse->error = '1';
-					parse->map[n] = '1';
-				}
-			}
+			error_wall_x(parse, n, x, vars);
+			error_wall_y(parse, y, n, vars);
 			vars->worldmap[x + y * vars->rc.mapwidth] = parse->map[n];
 			n++;
 			x++;
@@ -97,30 +72,8 @@ static t_vars		*mapsquare(int x, t_parse *parse, t_vars *vars)
 		x = 0;
 		y++;
 	}
-	if (parse->error == '1')
-	{
-		write (1, "Su mapa es inválido. Generando mapa idéntico rodeado de muros\n", 64);
-	}
+	invalid(parse);
 	return (vars);
-}
-
-static void		printmap(t_vars *vars)
-{
-	int x;
-	int y;
-
-	x = 0;
-	y = 0;
-	while (y < vars->rc.mapheight)
-    {
-        while (x < vars->rc.mapwidth)
-        {
-			printf("%c", vars->worldmap[x + y * vars->rc.mapwidth]);
-            x++;
-        }
-        x = 0;
-        y++;
-    }
 }
 
 t_vars				*worldmap(t_colors *colors, t_vars *vars, t_parse *parse,
@@ -141,7 +94,6 @@ t_data *data)
 	vars = orientation(vars);
 	vars = tresolution(vars, data);
 	init_values(vars, data);
-	printmap(vars);
 	inwindow(vars);
 	return (vars);
 }
@@ -157,6 +109,7 @@ int					initialize(t_colors *colors, t_parse *parse, t_data *data)
 	vars = ((t_vars *)malloc(sizeof(t_vars)));
 	if (!vars)
 		return (0);
+	parse->error = '0';
 	vars->rc.mapwidth = 0;
 	vars->rc.sprites = 0;
 	vars = posmap(x, y, parse, vars);

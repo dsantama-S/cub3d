@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 11:15:41 by dsantama          #+#    #+#             */
-/*   Updated: 2021/02/18 08:40:10 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/03/09 09:22:32 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,11 @@ int				analyze_map(t_data *data, t_parse *parse)
 	colors_c(n, n2, data, colors);
 	error_colors(colors, data);
 	error_map(parse, data);
+	if (data->error == -1)
+	{
+		write(1, "Ha ocurrido un error en la configuración del mapa.\n", 52);
+		return (-1);
+	}
 	initialize(colors, parse, data);
 	return (0);
 }

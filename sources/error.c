@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/22 10:55:05 by dsantama          #+#    #+#             */
-/*   Updated: 2021/03/01 08:56:53 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/03/09 09:50:31 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 //error de la resolución cuando no escribo numero
 //error de los colores cuando no escribo numero
+//error de las texturas
 
 void				error_colors(t_colors *colors, t_data *data)
 {
@@ -26,14 +27,6 @@ void				error_colors(t_colors *colors, t_data *data)
 	{
 		write(1, "Error: : Revise que los colores se encuentren dentro ", 53);
 		write(1, "del rango RGB completo(0 - 255).\n", 33);
-		data->error = -1;
-	}
-	if (data->texture_so[1] != 'e' || data->texture_no[1] != 'e' ||
-	data->texture_we[1] != 'e' || data->texture_ea[1] != 'e' ||
-	data->texture_sprite[1] != 'e')
-	{
-		write(1, "Error: : Revise que las texturas se encuentren ", 48);
-		write(1, "en la carpeta “textures”.\n", 30);
 		data->error = -1;
 	}
 }
@@ -64,6 +57,22 @@ void				error_map(t_parse *parse, t_data *data)
 		data->error = -1;
 }
 
+char				*res_width(char *aux, char *aux2)
+{
+	char	*str;
+	int		n;
+
+	n = 0;
+	str = ft_strchr(aux2, ' ');
+	str++;
+	while (str[n] != ' ' && str[n] != '\0')
+	{
+		aux[n] = str[n];
+		n++;
+	}
+	return (aux);
+}
+
 int					mapzeros(t_vars *vars, int x, int y)
 {
 	while (x < vars->rc.mapwidth)
@@ -83,18 +92,24 @@ int					mapzeros(t_vars *vars, int x, int y)
 	return (x);
 }
 
-char				*res_width(char *aux, char *aux2)
+void				error_wall_y(t_parse *parse, int y, int n, t_vars *vars)
 {
-	char	*str;
-	int		n;
-
-	n = 0;
-	str = ft_strchr(aux2, ' ');
-	str++;
-	while (str[n] != ' ' && str[n] != '\0')
+	if (parse->map[n] == ' ')
+		parse->map[n] = '0';
+	if (y == 0)
 	{
-		aux[n] = str[n];
-		n++;
+		if (parse->map[n] == '0')
+		{
+			parse->error = '1';
+			parse->map[n] = '1';
+		}
 	}
-	return (aux);
+	if (y == (vars->rc.mapheight - 1))
+	{
+		if (parse->map[n] == '0')
+		{
+			parse->error = '1';
+			parse->map[n] = '1';
+		}
+	}
 }
