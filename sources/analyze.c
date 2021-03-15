@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 11:15:41 by dsantama          #+#    #+#             */
-/*   Updated: 2021/03/09 09:22:32 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/03/15 10:20:13 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,13 @@ static void		resolution(t_data *data)
 		aux2[i] = data->r[i];
 		i++;
 	}
+	i = 1;
 	str = res_width(aux, aux2);
 	data->x = str;
 	str2 = ft_strnchr(aux2, ' ', 2);
 	str2++;
 	data->y = str2;
+	error_num_r(data);
 	data->swapx = ft_atoi(data->x);
 	data->swapy = ft_atoi(data->y);
 }
@@ -128,6 +130,8 @@ int				analyze_map(t_data *data, t_parse *parse)
 	colors_c(n, n2, data, colors);
 	error_colors(colors, data);
 	error_map(parse, data);
+	error_num_c(colors, data);
+	error_text(data);
 	if (data->error == -1)
 	{
 		write(1, "Ha ocurrido un error en la configuración del mapa.\n", 52);

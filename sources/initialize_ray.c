@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 12:34:05 by dsantama          #+#    #+#             */
-/*   Updated: 2021/03/09 09:19:58 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/03/15 10:53:24 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,5 +114,6 @@ int					initialize(t_colors *colors, t_parse *parse, t_data *data)
 	vars->rc.sprites = 0;
 	vars = posmap(x, y, parse, vars);
 	vars = worldmap(colors, vars, parse, data);
+	free(vars);
 	return (0);
 }

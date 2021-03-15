@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 09:14:24 by dsantama          #+#    #+#             */
-/*   Updated: 2021/03/09 09:10:21 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/03/15 10:12:58 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,6 +215,9 @@ void				error_wall_x(t_parse *parse, int n, int x, t_vars *vars);
 void				error_map(t_parse *parse, t_data *data);
 t_vars				*worldmap(t_colors *colors, t_vars *vars, t_parse *parse,
 t_data *data);
+void				error_num_r(t_data *data);
+void				error_num_c(t_colors *colors, t_data *data);
+void				error_text(t_data *data);
 int					movement(t_vars *vars);
 void				init_values(t_vars *vars, t_data *data);
 int					read_map_cub(char *path);

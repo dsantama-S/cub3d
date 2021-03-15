@@ -6,18 +6,17 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/22 10:55:05 by dsantama          #+#    #+#             */
-/*   Updated: 2021/03/09 09:50:31 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/03/15 10:47:57 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-//error de la resolución cuando no escribo numero
-//error de los colores cuando no escribo numero
-//error de las texturas
-
 void				error_colors(t_colors *colors, t_data *data)
 {
+	int i;
+
+	i = 0;
 	if (ft_atoi(colors->r_f) > 255 || ft_atoi(colors->r_f) < 0 ||
 	ft_atoi(colors->g_f) > 255 || ft_atoi(colors->g_f) < 0 ||
 	ft_atoi(colors->b_f) > 255 || ft_atoi(colors->b_f) < 0 ||

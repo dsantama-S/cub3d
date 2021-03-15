@@ -7,6 +7,7 @@ CFLAGS = -Wall -Werror -Wextra -I. -c
 SRC = 	ft_atoi.c \
 		ft_absolute.c \
 		ft_memset.c \
+		ft_istrdigit.c \
 		ft_bzero.c \
 		ft_strcat.c \
 		ft_calloc.c \

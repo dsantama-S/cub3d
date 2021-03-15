@@ -1,21 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_istrdigit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/26 10:44:08 by dsantama          #+#    #+#             */
-/*   Updated: 2021/03/15 10:51:33 by dsantama         ###   ########.fr       */
+/*   Created: 2021/03/15 09:49:07 by dsantama          #+#    #+#             */
+/*   Updated: 2021/03/15 09:58:45 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "libft.h"
 
-int		main(void)
+int	ft_istrdigit(char *str)
 {
-	char *path;
+	int i;
 
-	path = "../maps/map_test.cub";
-	read_map_cub(path);
+	i = 0;
+	while(str[i] != '\0')
+	{
+		if (!(ft_isdigit(str[i])))
+			{
+				return (-1);
+				break ;
+			}
+		i++;
+	}
+	return (1);
 }
