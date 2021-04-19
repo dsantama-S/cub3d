@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 08:51:46 by dsantama          #+#    #+#             */
-/*   Updated: 2021/02/18 10:05:23 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/04/14 12:07:26 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,11 @@ static void		sprite_distance(t_vars *vars)
 	while (i < vars->rc.sprites)
 	{
 		vars->rc.sprite[i].order = i;
-		vars->rc.sprite[vars->rc.sprite[i].order].distance = \
+		vars->rc.sprite[i].distance = \
 		pow(vars->rc.posx - \
-		vars->rc.sprite[vars->rc.sprite[i].order].coord_x, 2) + \
+		vars->rc.sprite[i].coord_x, 2) + \
 		pow(vars->rc.posy - \
-		vars->rc.sprite[vars->rc.sprite[i].order].coord_y, 2);
+		vars->rc.sprite[i].coord_y, 2);
 		i++;
 	}
 }

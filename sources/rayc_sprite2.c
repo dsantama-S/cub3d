@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 08:52:11 by dsantama          #+#    #+#             */
-/*   Updated: 2021/02/18 10:08:33 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/04/19 08:39:22 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void		last_render_sprite(int x, int i, t_vars *vars)
 	int	y;
 	int	d;
 
-	y = vars->rc.render.start_y;
+	y = vars->rc.render.start_y + 16;
 	while (y < vars->rc.render.end_y)
 	{
 		d = (y * 256 - vars->screen_height * \
