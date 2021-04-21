@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/22 10:55:05 by dsantama          #+#    #+#             */
-/*   Updated: 2021/03/15 10:47:57 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/04/21 09:48:11 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ int					mapzeros(t_vars *vars, int x, int y)
 			else
 				vars->worldmap[x + y * vars->rc.mapwidth] = '0';
 		}
+		if (y == 0)
+			vars->worldmap[x + y * vars->rc.mapwidth] = '1';
 		x++;
 	}
 	x--;
@@ -97,7 +99,7 @@ void				error_wall_y(t_parse *parse, int y, int n, t_vars *vars)
 		parse->map[n] = '0';
 	if (y == 0)
 	{
-		if (parse->map[n] == '0')
+		if (parse->map[n] == '0' || parse->map[n] == '2')
 		{
 			parse->error = '1';
 			parse->map[n] = '1';
@@ -105,7 +107,7 @@ void				error_wall_y(t_parse *parse, int y, int n, t_vars *vars)
 	}
 	if (y == (vars->rc.mapheight - 1))
 	{
-		if (parse->map[n] == '0')
+		if (parse->map[n] == '0' || parse->map[n] == '2')
 		{
 			parse->error = '1';
 			parse->map[n] = '1';

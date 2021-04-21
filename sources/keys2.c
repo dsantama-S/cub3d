@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 11:08:20 by dsantama          #+#    #+#             */
-/*   Updated: 2021/03/09 08:45:42 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/04/21 09:02:24 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,19 @@ void	move_down(t_vars *vars)
 void	move_up(t_vars *vars)
 {
 	if (vars->mv.up == 1)
+	{
+		if (vars->worldmap[(int)(vars->rc.posx + vars->rc.dirx * 0.09) + \
+		(int)(vars->rc.posy) * vars->rc.mapwidth] != '1' \
+		&& vars->worldmap[(int)(vars->rc.posx + vars->rc.dirx * 0.09) + \
+		(int)(vars->rc.posy) * vars->rc.mapwidth] != '2')
+			vars->rc.posx += vars->rc.dirx * 0.09;
+		if (vars->worldmap[(int)(vars->rc.posx) + \
+		(int)(vars->rc.posy + vars->rc.diry * 0.09) * vars->rc.mapwidth] != '1'\
+		&& vars->worldmap[(int)(vars->rc.posx) + \
+		(int)(vars->rc.posy + vars->rc.diry * 0.09) * vars->rc.mapwidth] != '2')
+			vars->rc.posy += vars->rc.diry * 0.09;
+	}
+	if (vars->mv.up_speed == 1)
 	{
 		if (vars->worldmap[(int)(vars->rc.posx + vars->rc.dirx * 0.09) + \
 		(int)(vars->rc.posy) * vars->rc.mapwidth] != '1' \

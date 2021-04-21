@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 09:44:53 by dsantama          #+#    #+#             */
-/*   Updated: 2021/02/17 11:22:29 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/04/21 09:02:10 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ int	key_release(int keycode, t_vars *vars)
 {
 	if (keycode == 13)
 		vars->mv.up = 0;
+	if (keycode == 257)
+		vars->mv.up_speed = 0;
 	if (keycode == 1)
 		vars->mv.down = 0;
 	if (keycode == 2)
@@ -63,6 +65,8 @@ int	key_press(int keycode, t_vars *vars)
 {
 	if (keycode == 13)
 		vars->mv.up = 1;
+	if (keycode == 257)
+		vars->mv.up_speed = 1;
 	if (keycode == 1)
 		vars->mv.down = 1;
 	if (keycode == 2)

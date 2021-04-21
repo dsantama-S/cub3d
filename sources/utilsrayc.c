@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 13:23:05 by dsantama          #+#    #+#             */
-/*   Updated: 2021/04/14 11:44:05 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/04/21 09:48:54 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	error_wall_x(t_parse *parse, int n, int x, t_vars *vars)
 {
 	if (x == vars->rc.mapwidth - 2)
 	{
-		if (parse->map[n] == '0')
+		if (parse->map[n] == '0' || parse->map[n] == '2')
 		{
 			parse->error = '1';
 			parse->map[n] = '1';

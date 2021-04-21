@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 09:14:24 by dsantama          #+#    #+#             */
-/*   Updated: 2021/03/15 10:12:58 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/04/21 09:45:47 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ typedef struct		s_texture
 typedef struct		s_movement
 {
 	int				up;
+	int				up_speed;
 	int				down;
 	int				right;
 	int				left;
