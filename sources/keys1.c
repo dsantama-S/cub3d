@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 09:44:53 by dsantama          #+#    #+#             */
-/*   Updated: 2021/04/21 09:02:10 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/04/26 10:55:31 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,5 @@ int	key_press(int keycode, t_vars *vars)
 		vars->mv.rot_right = 1;
 	if (keycode == 123)
 		vars->mv.rot_left = 1;
-	printf("%i\n", keycode);
 	return (0);
 }
