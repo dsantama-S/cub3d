@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 11:15:41 by dsantama          #+#    #+#             */
-/*   Updated: 2021/03/15 10:20:13 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/05/06 09:57:34 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,25 @@
 
 static void		resolution(t_data *data)
 {
-	char	*str;
 	char	*str2;
 	char	aux[5];
 	char	aux2[12];
 	int		i;
+	int		n;
 
 	i = 0;
+	n = 0;
 	aux[4] = 0;
+	aux2[11] = 0;
 	while (i < 11)
 	{
 		aux2[i] = data->r[i];
 		i++;
 	}
-	i = 1;
-	str = res_width(aux, aux2);
-	data->x = str;
+	i = 2;
+	while (aux2[i] != ' ' && aux2[i] != '\0')
+		aux[n++] = aux2[i++];
+	data->x = aux;
 	str2 = ft_strnchr(aux2, ' ', 2);
 	str2++;
 	data->y = str2;
